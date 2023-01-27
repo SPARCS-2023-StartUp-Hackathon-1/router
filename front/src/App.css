@@ -8,8 +8,6 @@ body,
 body {
   --black: #333;
   --white: #fff;
-  --orange: #de802a;
-  --light-orange: #efbf95;
   --red: #de552a;
   --light-red: #ef9f95;
   --gradient-red: 90deg, #de552a 0%, #efaa95 100%;

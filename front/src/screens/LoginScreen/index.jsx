@@ -3,20 +3,19 @@ import Button from "components/common/Button";
 import Input from "./Input";
 import Circle from "components/common/Circle";
 
-const styleContainer = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  height: "476px",
-  width: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  alignItems: "center",
-};
-
 const LoginScreen = () => {
+  const styleContainer = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: "476px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
   return (
     <>
       <Circle size={476} top={-149} left={-146} />

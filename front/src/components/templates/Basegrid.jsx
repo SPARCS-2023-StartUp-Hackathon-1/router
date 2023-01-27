@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from "./Navigation";
 
 const BaseGrid = ({ children }) => {
   const styleGrid = {
@@ -8,7 +9,12 @@ const BaseGrid = ({ children }) => {
     margin: "auto",
     position: "relative",
   };
-  return <div style={styleGrid}>{children}</div>;
+  return (
+    <>
+      <div style={styleGrid}>{children}</div>;
+      <Navigation />
+    </>
+  );
 };
 
 export default BaseGrid;

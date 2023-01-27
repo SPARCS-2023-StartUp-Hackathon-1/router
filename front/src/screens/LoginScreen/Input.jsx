@@ -1,18 +1,17 @@
 import React from "react";
 
-const styleInputGrid = {
-  margin: "auto 0 60px",
-  width: 262,
-  color: "var(--red)",
-  display: "grid",
-  rowGap: "33px",
-};
-const styleInput = {
-  display: "grid",
-  rowGap: "5px",
-};
-
 const Input = () => {
+  const styleInputGrid = {
+    margin: "auto 0 60px",
+    width: 262,
+    color: "var(--red)",
+    display: "grid",
+    rowGap: "33px",
+  };
+  const styleInput = {
+    display: "grid",
+    rowGap: "5px",
+  };
   return (
     <div style={styleInputGrid}>
       <div style={styleInput}>
