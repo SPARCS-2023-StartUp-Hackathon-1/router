@@ -1,15 +1,18 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Union
+from image import getImageExifFromUrl
 
 app = FastAPI()
 
-class EmbeddingBody(BaseModel):
-    imageUrls: List[str]
+class ExtractBody(BaseModel):
+    imageUrl: str
 
-@app.post("/embedding")
-def embeddingHandler(body: EmbeddingBody):
+@app.post("/extract")
+def extractHandler(body: ExtractBody):
     try:
+        imageUrl = body.imageUrl
+        exifData = getImageExifFromUrl(imageUrl)
         return {
             "vector": []
         }

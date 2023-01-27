@@ -1,5 +1,5 @@
 const loadenv = require("../../loadenv");
-const { userModel } = require("../db/mongo");
+const { userModel } = require("../modules/mongo");
 const { logout, login, getLoginInfo } = require("../auth/login");
 
 const makeInfo = (id, nickname) => {
