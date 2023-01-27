@@ -9,3 +9,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
+
+input {
+  font-family: inherit;
+  color: var(--red);
+  width: 100%;
+  padding: 5px 0;
+  margin: 0;
+  border-bottom: solid 1px var(--red);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+input:focus-visible {
+  outline-style: none;
+}
