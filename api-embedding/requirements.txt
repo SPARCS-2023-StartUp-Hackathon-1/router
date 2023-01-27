@@ -4,7 +4,8 @@ torchserve==0.2.0
 nvgpu==0.9.0
 fastapi[all]
 uvicorn[standard]
-requests
-python-dotenv
-numpy
+requests==2.27.1
+python-dotenv==0.21.0
+exifread==2.3.2
 opencv-python==4.7.0.68
+numpy
