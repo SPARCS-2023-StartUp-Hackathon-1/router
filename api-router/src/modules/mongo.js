@@ -32,11 +32,11 @@ const pinSchema = Schema({
 });
 
 const imageSchema = Schema({
-  time: { type: Date, required: true },
-  latitude: { type: Number, required: true },
-  longitude: { type: Number, required: true },
-  vector: { type: String, default: "" },
-  valid: { type: Boolean, default: true },
+  time: { type: Date },
+  latitude: { type: Number },
+  longitude: { type: Number },
+  vector: { type: String },
+  valid: { type: Boolean, default: false },
 });
 
 const database = mongoose.connection;
