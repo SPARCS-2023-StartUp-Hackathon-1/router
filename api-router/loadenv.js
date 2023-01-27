@@ -6,4 +6,5 @@ module.exports = {
   redis: process.env.REDIS_PATH,
   port: process.env.PORT,
   frontUrl: process.env.FRONT_URL,
+  session: process.env.SESSION_KEY,
 };
