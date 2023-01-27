@@ -11,3 +11,7 @@ const listHandler = async (req, res) => {
     });
   }
 };
+
+module.exports = {
+  listHandler,
+};
