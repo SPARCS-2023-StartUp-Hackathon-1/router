@@ -1,3 +1,4 @@
 .DS_store
 *.code-workspace
 *.swp
+.vscode
