@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import FlightLandRoundedIcon from "@mui/icons-material/FlightLandRounded";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+
 const Navigation = () => {
   const styleContainer = {
     position: "fixed",
@@ -30,7 +35,7 @@ const Navigation = () => {
 };
 
 const NavigationMenu = ({ text, page }) => {
-  const selected = useLocation().pathname.startsWith("/" + page);
+  const selected = useLocation().pathname.startsWith(page);
   const styleBox = {
     width: "25%",
     height: "100%",
@@ -42,34 +47,34 @@ const NavigationMenu = ({ text, page }) => {
   const styleIcon = {
     fontSize: "24px",
     marginTop: "12px",
-    // transition: `fill ${theme.duration}`,
-    // fill: styleColor,
+    fill: "var(--white)",
+    opacity: selected ? "1" : "0.5",
   };
   const styleText = {
     marginTop: "6px",
     width: "fit-content",
-    // transitionDuration: theme.duration,
     color: "var(--white)",
     opacity: selected ? "1" : "0.5",
   };
 
-  //   const getIcon = (type: PageType) => {
-  //     switch (type) {
-  //       case "home":
-  //         return <RoofingRoundedIcon style={styleIcon} />;
-  //       case "search":
-  //         return <SearchRoundedIcon style={styleIcon} />;
-  //       case "addroom":
-  //         return <AddRoundedIcon style={styleIcon} />;
-  //       case "myroom":
-  //         return <SubjectRoundedIcon style={styleIcon} />;
-  //       case "mypage":
-  //         return <PersonOutlineRoundedIcon style={styleIcon} />;
-  //     }
-  //   };
+  const getIcon = (page) => {
+    switch (page) {
+      case "/":
+        return <HomeRoundedIcon style={styleIcon} />;
+      case "/travel":
+        return <FlightLandRoundedIcon style={styleIcon} />;
+      case "/add":
+        return <AddRoundedIcon style={styleIcon} />;
+      case "/profile":
+        return <AccountCircleRoundedIcon style={styleIcon} />;
+      default:
+        return <></>;
+    }
+  };
+
   return (
     <Link to={page} style={styleBox}>
-      {/* {getIcon(text)} */}
+      {getIcon(page)}
       <div className="font-small-text" style={styleText}>
         {text}
       </div>
