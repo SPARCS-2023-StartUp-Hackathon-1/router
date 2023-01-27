@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const loadenv = require("../../loadenv");
 
 const userSchema = Schema({
   id: { type: String, required: true },
