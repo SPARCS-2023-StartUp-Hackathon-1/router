@@ -4,36 +4,39 @@ const Schema = mongoose.Schema;
 const userSchema = Schema({
   id: { type: String, required: true },
   nickname: { type: String, required: true },
-  friends: [{ type: Schema.Types.ObjectId }],
+  friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
   trips: [{ type: Schema.Types.ObjectId, ref: "Trip" }],
 });
 
 const tripSchema = Schema({
-  name: { type: String, required: true, text: true },
-  range: { type: String, required: true, text: true },
-  progress: { type: Boolean, default: true }, // default progress true
+  name: { type: String, required: true },
+  startTime: { type: String, required: true },
+  endTime: { type: String, required: true },
+  progress: { type: Boolean, default: true }, // false: 완료된 여행, true: 진행중인 여행
   pins: [{ type: Schema.Types.ObjectId, ref: "Pin" }],
 });
 
 const pinElementSchema = Schema({
-  mainImage: { type: String, require: true },
+  mainImage: { type: Schema.Types.ObjectId, ref: "Image", required: true },
+  vector: { type: String, required: true }, // = global vector
   images: [{ type: Schema.Types.ObjectId, ref: "Image" }],
 });
 
 const pinSchema = Schema({
-  name: { type: String, required: true, text: true },
-  memo: { type: String, required: true, text: true },
+  name: { type: String, default: "" },
+  note: { type: String, default: "" },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
-  mainImage: { type: String, require: true }, // 백엔드에서 이미지 경로
-  images: [pinElementSchema], // Pinelement type 만들기
+  mainImage: { type: Schema.Types.ObjectId, ref: "Image", required: true },
+  imageSets: [pinElementSchema], // Pinelement type 만들기
 });
 
 const imageSchema = Schema({
   time: { type: Date, required: true },
-  url: { type: String, required: true },
   latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
+  vector: { type: String, default: "" },
+  valid: { type: Boolean, default: true },
 });
 
 const database = mongoose.connection;
