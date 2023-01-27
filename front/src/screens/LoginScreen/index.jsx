@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "components/common/Button";
 import Input from "./Input";
+import Circle from "components/common/Circle";
 
 const styleContainer = {
   position: "absolute",
@@ -14,40 +15,13 @@ const styleContainer = {
   justifyContent: "space-between",
   alignItems: "center",
 };
-const styleCircle1 = {
-  position: "absolute",
-  top: -149,
-  left: -146,
-  width: 476,
-  height: 476,
-  borderRadius: "50%",
-  border: "solid 1px var(--red)",
-};
-const styleCircle2 = {
-  position: "absolute",
-  top: -180,
-  right: -168,
-  width: 394,
-  height: 394,
-  borderRadius: "50%",
-  border: "solid 1px var(--red)",
-};
-const styleCircle3 = {
-  position: "absolute",
-  bottom: -109,
-  left: 107,
-  width: 394,
-  height: 394,
-  borderRadius: "50%",
-  border: "solid 1px var(--red)",
-};
 
 const LoginScreen = () => {
   return (
     <>
-      <div style={styleCircle1} />
-      <div style={styleCircle2} />
-      <div style={styleCircle3} />
+      <Circle size={476} top={-149} left={-146} />
+      <Circle size={394} top={-180} right={-168} />
+      <Circle size={394} bottom={-109} left={107} />
       <div style={styleContainer}>
         <div style={{ color: "var(--red)", textAlign: "center" }}>
           <div className="font-logo">ROUTER</div>
