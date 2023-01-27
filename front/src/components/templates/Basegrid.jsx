@@ -8,10 +8,12 @@ const BaseGrid = ({ children }) => {
     maxWidth: 430,
     margin: "auto",
     position: "relative",
+    padding: "0 24px",
+    boxSizing: "border-box",
   };
   return (
     <>
-      <div style={styleGrid}>{children}</div>;
+      <div style={styleGrid}>{children}</div>
       <Navigation />
     </>
   );
