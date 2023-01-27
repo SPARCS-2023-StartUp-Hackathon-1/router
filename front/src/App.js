@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import BaseGrid from "components/templates/Basegrid";
 import HomeScreen from "screens/HomeScreen";
+import LoginScreen from "screens/LoginScreen";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="*" element={<Navigate to="/home" replace />} />
           <Route path="/" element={<HomeScreen />} />
+          <Route path="/login" element={<LoginScreen />} />
         </Routes>
       </BaseGrid>
     </Router>

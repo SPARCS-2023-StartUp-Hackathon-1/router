@@ -1,0 +1,38 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  --black: #333;
+  --white: #fff;
+  --orange: #de802a;
+  --light-orange: #efbf95;
+  --red: #de552a;
+  --light-red: #ef9f95;
+  --gradient-red: 90deg, #de552a 0%, #efaa95 100%;
+  /* linear-gradient(var(--gradient-red)) */
+}
+
+.font-logo {
+  font-size: 48px;
+  font-weight: 900;
+}
+.font-subtitle {
+  font-size: 20px;
+  font-weight: 700;
+}
+.font-text {
+  font-size: 16px;
+  font-weight: 400;
+}
+.font-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+.font-small-text {
+  font-size: 12px;
+  font-weight: 400;
+}
