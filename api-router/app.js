@@ -20,10 +20,13 @@ app.use(session);
 app.use(cookieParser());
 
 // 라우터 및 리액트
-// app.use("/auth", require("./src/route/auth"));
+app.use("/auth", require("./src/route/auth"));
+app.use("/user", require("./src/route/user"));
+app.use("/trip", require("./src/route/trip"));
+app.use("/pin", require("./src/route/pin"));
+app.use("/image", require("./src/route/image"));
 
 // express 서버 시작
 const serverHttp = http.createServer(app).listen(loadenv.port, () => {
-    console.log(`Express 서버가 ${loadenv.port}번 포트에서 시작됨.`);
-  });
-  
+  console.log(`Express 서버가 ${loadenv.port}번 포트에서 시작됨.`);
+});
