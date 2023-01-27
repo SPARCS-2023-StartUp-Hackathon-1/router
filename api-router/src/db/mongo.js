@@ -42,10 +42,10 @@ const imageSchema = Schema({
 const database = mongoose.connection;
 database.on("error", console.error.bind(console, "mongoose connection error."));
 database.on("open", () => {
-  logger.info("데이터베이스와 연결되었습니다.");
+  console.log("데이터베이스와 연결되었습니다.");
 });
 database.on("error", function (err) {
-  logger.error("데이터베이스 연결 에러 발생: " + err);
+  console.log("데이터베이스 연결 에러 발생: " + err);
   mongoose.disconnect();
 });
 
