@@ -5,18 +5,24 @@ import logging
 import json
 import requests
 from PIL import Image
+from pillow_heif import register_heif_opener
 from transformers import AutoImageProcessor, AutoModel
 
 logger = logging.getLogger(__name__)
 
+def loadImageFromUrl(imageUrl):
+    imageData = requests.get(imageUrl, stream=True).raw
+    return Image.open(imageData)
+
 def loadImagesFromUrl(imageUrls):
-    images = [Image.open(requests.get(url, stream=True).raw) for url in imageUrls]
+    images = [loadImageFromUrl(url) for url in imageUrls]
     return images
 
 class ViTHandler(object):
     def __init__(self):
         self.initialized = False
         self.model = None
+        register_heif_opener()
 
     def initialize(self, context):
         # load the properties
