@@ -1,17 +1,36 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "components/common/Button";
 import Input from "./Input";
 import Circle from "components/common/Circle";
-
 import axios from "utils/axios";
 
+import { useSetRecoilState } from "recoil";
+import loginInfoAtom from "recoil/logininfo/atom";
+
 const LoginScreen = () => {
+  const navigate = useNavigate();
+  const setLoginInfo = useSetRecoilState(loginInfoAtom);
   const [loginId, setLoginId] = useState("");
   const [loginPw, setLoginPw] = useState("");
 
-  const onClickLogin = () => {
-    if (loginId === "" || loginPw === "") {
+  const onClickLogin = async () => {
+    if (loginId === "" || loginPw === "")
       return alert("아이디와 비밀번호를 입력해주세요.");
+    try {
+      const res = await axios.post("/auth/login", {
+        id: loginId,
+        nickname: loginId,
+      });
+      if (res.status !== 200) return alert("로그인에 실패하였습니다.");
+
+      const loginInfoRes = await axios.get("/auth/logininfo");
+      if (loginInfoRes.status !== 200) return alert("로그인에 실패하였습니다.");
+      setLoginInfo(loginInfoRes.data);
+
+      navigate("/home");
+    } catch (e) {
+      console.error(e);
     }
   };
   const styleContainer = {

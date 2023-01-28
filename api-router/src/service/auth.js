@@ -1,6 +1,6 @@
 // const loadenv = require("../../loadenv");
 const { userModel } = require("../modules/mongo");
-const { logout, login, getLoginInfo } = require("../auth/login");
+const { logout, login, getLoginInfo, isLogin } = require("../auth/login");
 
 const makeInfo = (id, nickname) => {
   const info = {
@@ -30,21 +30,23 @@ const joinus = (req, res, userData) => {
 
 const loginComplete = (req, res, userData) => {
   userModel.findOne({ id: userData.id }, (err, result) => {
-    if (err) console.log(err);
-    else if (!result) joinus(req, res, userData);
-    else {
-      login(req, result.id, result.nickname);
-      res.send("ok login");
+    if (err) {
+      console.error(err);
+      return res.status(500).send("internal server error");
     }
+
+    // FIXME - joinus
+    if (!result) return joinus(req, res, userData);
+
+    login(req, result.id, result.nickname);
+    res.send("ok login");
   });
 };
 
 const tryHandler = (req, res) => {
-  {
-    const id = req.body.id || req.query.id;
-    const nickname = req.body.nickname || req.query.nickname;
-    loginComplete(req, res, makeInfo(id, nickname));
-  }
+  const id = req.body.id;
+  const nickname = req.body.nickname;
+  loginComplete(req, res, makeInfo(id, nickname));
 };
 
 const logoutHandler = (req, res) => {

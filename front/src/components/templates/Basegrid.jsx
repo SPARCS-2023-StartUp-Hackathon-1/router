@@ -10,6 +10,7 @@ const BaseGrid = ({ children }) => {
   const location = useLocation();
   const pathname = location.pathname;
   const loginInfo = useRecoilValue(loginInfoAtom);
+  console.log(loginInfo);
 
   const styleGrid = {
     width: "100%",
