@@ -48,7 +48,7 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
             "linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)",
           zIndex: -1,
         }}
-        alt={`/``/${path}`}
+        alt={`/${path}`}
       />
     </a>
   );

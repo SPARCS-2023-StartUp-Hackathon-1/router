@@ -15,15 +15,18 @@ const BaseGrid = ({ children }) => {
     const f = async () => {
       if (loginInfo === null) {
         const loginInfoRes = await axios.get("/auth/logininfo");
-        if (loginInfoRes.status !== 200 || !loginInfoRes.data?.id)
+        if (
+          loginInfoRes.status !== 200 ||
+          !!loginInfoRes ||
+          !loginInfoRes.data?.id
+        )
           window.location.href = "/login";
         setLoginInfo(loginInfoRes.data);
       }
     };
     if (pathname.startsWith("/login")) return;
     f();
-  }, [JSON.stringify(loginInfo)]);
-  console.log("loginInfo", loginInfo);
+  }, []);
   const styleGrid = {
     ...{
       width: "100%",
