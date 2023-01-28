@@ -13,6 +13,7 @@ const Circle = ({ size, top, bottom, left, right }) => {
         right: right,
         borderRadius: "50%",
         border: "solid 1px var(--red)",
+        zIndex: -1,
       }}
     />
   );

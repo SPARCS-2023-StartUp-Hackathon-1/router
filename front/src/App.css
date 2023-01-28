@@ -8,21 +8,33 @@ body,
 body {
   --black: #333;
   --white: #fff;
-  --orange: #de802a;
-  --light-orange: #efbf95;
   --red: #de552a;
   --light-red: #ef9f95;
   --gradient-red: 90deg, #de552a 0%, #efaa95 100%;
   /* linear-gradient(var(--gradient-red)) */
 }
 
-.font-logo {
+.font-logo-small {
+  color: var(--red);
+  font-size: 24px;
+  font-weight: 900;
+}
+.font-logo-large {
+  color: var(--red);
   font-size: 48px;
   font-weight: 900;
 }
-.font-subtitle {
+.font-subtitle-small {
   font-size: 20px;
   font-weight: 700;
+}
+.font-subtitle-large {
+  font-size: 24px;
+  font-weight: 700;
+}
+.font-text-small {
+  font-size: 12px;
+  font-weight: 400;
 }
 .font-text {
   font-size: 16px;
@@ -31,8 +43,4 @@ body {
 .font-title {
   font-size: 32px;
   font-weight: 700;
-}
-.font-small-text {
-  font-size: 12px;
-  font-weight: 400;
 }

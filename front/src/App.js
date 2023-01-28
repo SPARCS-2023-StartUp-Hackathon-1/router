@@ -14,7 +14,7 @@ function App() {
     <Router>
       <BaseGrid>
         <Routes>
-          <Route path="*" element={<Navigate to="/home" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
           <Route path="/" element={<HomeScreen />} />
           <Route path="/login" element={<LoginScreen />} />
         </Routes>
