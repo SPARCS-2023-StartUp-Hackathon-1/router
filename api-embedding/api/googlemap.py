@@ -7,8 +7,13 @@ gmaps = googlemaps.Client(key=os.getenv('GOOGLEMAP_API_KEY'))
 
 def aroundSearch(lat, lng):
     try:
-        reverse_geocode_result = gmaps.reverse_geocode((lat, lng), language="ko")
-        return reverse_geocode_result[0]['formatted_address']
+        # 거리 이름 버전
+        # reverse_geocode_result = gmaps.reverse_geocode((lat, lng), language="ko")
+        # return reverse_geocode_result[0]['formatted_address']
+        # 가까운 장소 버전
+        result = gmaps.places_nearby(location=(lat, lng), radius=1000, language="ko")
+        names = [result['name'] for result in result['results']]
+        return names[0]
     except:
         return ""
 
