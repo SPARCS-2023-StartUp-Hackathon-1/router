@@ -4,10 +4,9 @@ from typing import List, Union
 from datetime import datetime
 from image import getImageExifFromUrl
 from vit import getEmbeddingVectorFromUrl
-from cluster import dist
+from cluster import dist, diff
 
 import pandas as pd
-
 
 app = FastAPI()
 
@@ -18,7 +17,7 @@ class clusteringBody(BaseModel):
     time: datetime
     latitude: float
     longitude: float
-    
+
 @app.post("/extract")
 def extractHandler(body: ExtractBody):
     try:
@@ -42,7 +41,7 @@ def clusteringHandler(body: [clusteringBody]):
         cluster =[]
         subgroup = [sort_body[0]]
         for i in range(1, len(image)):
-            if sort_body[i-1].datetime.date!= sort_body[i].datetime.date or 1 < dist(sort_body[i-1].latitude, sort_body[i-1].longitude, sort_body[i].latitude, sort_body[i].longitude):
+            if 3600 < diff(sort_body[i-1].datetime, sort_body[i].datetime) and 1 < dist(sort_body[i-1].latitude, sort_body[i-1].longitude, sort_body[i].latitude, sort_body[i].longitude):
                 cluster.append(subgroup)
                 subgroup=[]
             else:
