@@ -13,7 +13,7 @@ const Navigation = () => {
     left: "0px",
     bottom: "0px",
     width: "100%",
-    height: "calc(56px + env(safe-area-inset-bottom))",
+    height: "calc(56px + max(env(safe-area-inset-bottom), 12px))",
     backgroundColor: "var(--red)",
   };
   const styleNavigation = {
