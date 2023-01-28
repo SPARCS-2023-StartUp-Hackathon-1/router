@@ -10,6 +10,10 @@ body {
   --white: #fff;
   --red: #de552a;
   --light-red: #ef9f95;
+  --gray-F3: #f3f3f3;
+  --gray-E: #eee;
+  --gray-C: #ccc;
+  --gray-9: #999;
   --gradient-red: 90deg, #de552a 0%, #efaa95 100%;
   /* linear-gradient(var(--gradient-red)) */
 }
