@@ -4,7 +4,7 @@ from typing import List, Union
 from datetime import datetime
 from image import getImageExifFromUrl
 from vit import getEmbeddingVectorFromUrl
-from cluster import dist, diff
+from cluster import clusteringLarge, clusteringDeep, clusters2res
 
 import pandas as pd
 
@@ -14,6 +14,7 @@ class ExtractBody(BaseModel):
     imageUrl: str
 
 class ImageInfo(BaseModel):
+    id: str
     time: datetime
     latitude: float
     longitude: float
@@ -41,21 +42,25 @@ def extractHandler(body: ExtractBody):
 @app.post("/clustering")
 def clusteringHandler(body: ClusteringBody):
     try:
-        images = body.images
-        sort_body = images.sorted(key=lambda x: x["time"]) # sort by date
-        startTime = sort_body[0]["time"].date
-        endTime = sort_body[-1]["time"].date
+        # sort by date
+        images = [dict(image) for image in body.images]
+        images = sorted(images, key=lambda x: x["time"])
         
-        cluster = []
-        subgroup = [sort_body[0]]
-        for i in range(1, len(images)):
-            if 3600 < diff(sort_body[i-1].datetime, sort_body[i].datetime) and 1 < dist(sort_body[i-1].latitude, sort_body[i-1].longitude, sort_body[i].latitude, sort_body[i].longitude):
-                cluster.append(subgroup)
-                subgroup=[]
-            else:
-                subgroup.append(sort_body[i])
+        # extract start&end date
+        startTime = images[0]["time"] # to string
+        endTime = images[-1]["time"] # to string
+        
+        # clustering Large
+        clusters = clusteringLarge(images)
+        # print(len(images))
+        # print(len(clusters))
+
+        # clustering Deep
+        clustersV2 = [clusteringDeep(cluster) for cluster in clusters]
+        
+        # print(clusters2res(clustersV2))
         return {
-            "cluster" : cluster,
+            "clusters": clusters2res(clustersV2),
             "startTime" : startTime,
             "endTime": endTime,
         }
