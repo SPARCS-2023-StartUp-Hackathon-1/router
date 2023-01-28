@@ -112,6 +112,7 @@ const Photo = ({ info, setInfo }) => {
       imageIds: info.photos,
       userId: loginInfo.id,
     });
+    console.log(response);
   };
   return (
     <>

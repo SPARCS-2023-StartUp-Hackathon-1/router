@@ -1,0 +1,18 @@
+.gmnoprint {
+  display: none;
+}
+
+.gm-style .gm-style-iw-c {
+  padding: 0px !important;
+  box-shadow: none !important;
+  background: none !important;
+  overflow: visible !important;
+}
+
+button[title|="Close"] {
+  display: none !important;
+}
+
+.gm-style .gm-style-iw-tc {
+  display: none;
+}

@@ -4,6 +4,6 @@ const userHandlers = require("../service/user");
 
 router.use(require("../middleware/auth"));
 
-router.get("/triplist", userHandlers.triplistHandler);
+router.get("/triplist/:userId", userHandlers.triplistHandler);
 
 module.exports = router;

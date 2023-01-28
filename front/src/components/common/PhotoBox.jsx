@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-// import { getS3Url } from "tools/image";
+import { getS3Url } from "tools/image";
 
 const PhotoBox = ({ path, width, height = 100, children, href }) => {
   const styleBox = {
@@ -17,8 +17,9 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
     zIndex: 0,
     textDecoration: "none",
   };
-  //   const getSrc = () => getS3Url(`/profile-img/${path}`);
-  //   const [src, setSrc] = useState(getSrc());
+  const getSrc = () => getS3Url(`/image-ori/${path}`);
+  const [src, setSrc] = useState(getSrc());
+  console.log(src);
   return (
     <a style={styleBox} href={href}>
       <div
@@ -35,7 +36,7 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
       />
       {children}
       <img
-        // src={src}
+        src={src}
         style={{
           position: "absolute",
           top: "0px",

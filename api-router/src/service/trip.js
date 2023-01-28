@@ -73,6 +73,7 @@ const createHandler = async (req, res) => {
         startTime: startTime.toString(),
         endTime: endTime.toString(),
         progress: progress,
+        mainImage: clusters[0]["imageSets"][0]["mainImage"],
         pins: pins,
       });
       await trip.save();
@@ -119,20 +120,20 @@ const createHandler = async (req, res) => {
 
 const pinlistHandler = async (req, res) => {
   try {
-    const trip = await tripModel.findOne({ _id: req.body.tripId });
+    const trip = await tripModel.findOne({ _id: req.params.tripId });
     // .populate("pins");
 
     // get only pins _id, latitudem logitude
     const pinlist = [];
     for (const pinId of trip.pins) {
-      console.log(pinId);
-
       const pin = await pinModel.findOne({ _id: pinId });
-      console.log(pin["longitude"]);
+      // console.log(pin["longitude"]);
+
       pinlist.push({
         _id: pinId,
         latitude: pin["latitude"],
         longitude: pin["longitude"],
+        mainImage: pin["mainImage"],
       });
     }
     console.log(pinlist);
