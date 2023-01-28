@@ -38,6 +38,7 @@ def extractHandler(body: ExtractBody):
 def clusteringHandler(body: [clusteringBody]):
     try:
         sort_body = body.sorted(key=lambda x: x[0]) # sort by date
+        
         cluster =[]
         subgroup = [sort_body[0]]
         for i in range(1, len(image)):
