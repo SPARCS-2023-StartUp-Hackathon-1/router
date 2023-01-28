@@ -47,7 +47,12 @@ const BaseGrid = ({ children }) => {
   if (pathname.startsWith("/login"))
     return <div style={styleGrid}>{children}</div>;
   if (pathname.startsWith("/travel"))
-    return <div style={styleTravel}>{children}</div>;
+    return (
+      <div style={styleTravel}>
+        <Header />
+        {children}
+      </div>
+    );
   return (
     <>
       <div style={styleGrid}>
