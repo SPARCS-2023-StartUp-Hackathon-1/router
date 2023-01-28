@@ -25,17 +25,23 @@ const BaseGrid = ({ children }) => {
   }, [JSON.stringify(loginInfo)]);
 
   const styleGrid = {
-    width: "100%",
-    height: "100%",
-    maxWidth: 430,
-    margin: "auto",
-    position: "relative",
-    padding: "0 24px",
-    boxSizing: "border-box",
-    // height: "calc(100% - env(safe-area-inset-bottom))",
-    // paddingTop: "env(safe-area-inset-top)",
-    paddingBottom: "calc(56px + 24px + env(safe-area-inset-bottom))",
-    overflowX: "hidden",
+    ...{
+      width: "100%",
+      height: "100%",
+      maxWidth: 430,
+      margin: "auto",
+      position: "relative",
+      padding: "0 24px",
+      boxSizing: "border-box",
+      // height: "calc(100% - env(safe-area-inset-bottom))",
+      // paddingTop: "env(safe-area-inset-top)",
+      overflowX: "hidden",
+    },
+    ...(pathname.startsWith("/create") || pathname.startsWith("/travel")
+      ? { paddingBottom: "calc(24px + env(safe-area-inset-bottom))" }
+      : {
+          paddingBottom: "calc(56px + 24px + env(safe-area-inset-bottom))",
+        }),
   };
   const styleTravel = {
     width: "100%",

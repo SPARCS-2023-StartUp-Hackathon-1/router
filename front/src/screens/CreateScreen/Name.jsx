@@ -3,7 +3,12 @@ import FlagImg from "static/assets/Flag.png";
 
 const Name = ({ info, setInfo }) => {
   return (
-    <div style={{ position: "relative" }}>
+    <div
+      style={{
+        position: "relative",
+        marginTop: "calc(30px + env(safe-area-inset-top))",
+      }}
+    >
       <img
         src={FlagImg}
         alt={"flag"}

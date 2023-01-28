@@ -25,7 +25,7 @@ const Photo = ({ info, setInfo }) => {
     setMessage(
       <>
         선택한 <UB>{info.total}</UB>장의 사진 중 <br />
-        <UB>{info.photos?.length}</UB>장의 사진이 성공적으로 추가 되었어요.
+        <UB>{info.photos?.length}</UB>장의 사진이 성공적으로 추가되었어요.
       </>
     );
   }, [info.photos?.length, info.total]);
@@ -115,7 +115,10 @@ const Photo = ({ info, setInfo }) => {
   };
   return (
     <>
-      <div className="font-title-large">
+      <div
+        className="font-title-large"
+        style={{ marginTop: "calc(30px + env(safe-area-inset-top))" }}
+      >
         기억하고 싶은 <br />
         이번 여행의 사진을
         <br /> 추가해 주세요.
