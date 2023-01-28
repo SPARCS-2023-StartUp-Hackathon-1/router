@@ -1,6 +1,8 @@
 const { request } = require("express");
 const express = require("express");
 const awsS3 = require("../modules/awsS3");
+const axios = require("axios");
+const loadenv = require("../../loadenv");
 const { imageModel } = require("../modules/mongo");
 
 const router = express.Router();
@@ -60,32 +62,22 @@ router.post("/upload/complete", async (req, res) => {
       return res.status(404).send("not-found corresponding image");
 
     const key = `image-ori/${image._id}`;
-    awsS3.foundObject(key, (err, data) => {
-      console.log(key);
-      console.log(err);
-      console.log(data);
+    awsS3.foundObject(key, async (err, data) => {
       if (err) return res.json({ result: false });
-      // ToDo : 이미지 정보 추출 됬는지
-      // ToDo : 이미지 추출 정보 저장
-
-      // ToDo : test post cost
-      const options = {
-        uri: "http://router.hackathon.sparcs.org:8080/extract",
-        method: "POST",
-        body: {
-          imageUrl: key,
-        },
-        json: true,
-      };
-      request.post(options, function (body) {
-        console.log(body);
-        const { datetime, latitude, logitude, vector } = body;
-        image["time"] = datetime;
-        image["latitude"] = latitude;
-        image["logitude"] = logitude;
-        image["vector"] = vector;
-      });
-      res.json({ result: true });
+      try {
+        const extractRes = await axios.post(`${loadenv.embeddingUrl}/extract`, {
+          imageUrl: `https://${loadenv.aws.s3BucketName}.s3.ap-northeast-2.amazonaws.com/${key}`,
+        });
+        const { datetime, latitude, logitude, vector } = extractRes.data;
+        const newImage = await imageModel.findOneAndUpdate(
+          { _id: req.body.id },
+          { time: datetime, latitude, logitude, vector: vector.toString() },
+          { new: true }
+        );
+        res.json({ result: true, newImage });
+      } catch (e) {
+        res.json({ result: false });
+      }
     });
     await image.save();
   } catch (e) {

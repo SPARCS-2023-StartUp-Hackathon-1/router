@@ -4,6 +4,7 @@ module.exports = {
   nodeEnv: process.env.NODE_ENV,
   mongo: process.env.MONGO_PATH,
   redis: process.env.REDIS_PATH,
+  embeddingUrl: process.env.API_EMBEDDING_URL,
   port: process.env.PORT,
   session: process.env.SESSION_KEY,
   aws: {
