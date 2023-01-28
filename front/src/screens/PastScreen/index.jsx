@@ -1,7 +1,7 @@
 import React from "react";
 import PhotoBox from "components/common/PhotoBox";
 
-const TravelScreen = () => {
+const PastScreen = () => {
   return (
     <div style={{ position: "relative", marginTop: 110 - 32 }}>
       <div
@@ -21,7 +21,11 @@ const TravelScreen = () => {
         </div>
         <input className="font-text-large" placeholder="여행 검색하기"></input>
       </div>
+<<<<<<< HEAD:front/src/screens/TravelScreen/index.jsx
 
+=======
+      <input className="font-text-large" placeholder="여행 검색하기" />
+>>>>>>> 3bdaf81dcc97bd099b4910ec6182872f7938a903:front/src/screens/PastScreen/index.jsx
       <div
         style={{
           display: "flex",
@@ -38,4 +42,4 @@ const TravelScreen = () => {
   );
 };
 
-export default TravelScreen;
+export default PastScreen;

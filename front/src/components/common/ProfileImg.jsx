@@ -5,12 +5,12 @@ import { getS3Url } from "tools/image";
 // import defaultImg from "static/assets/profileImgOnError.png";
 
 const ProfileImg = ({ path, width, margin }) => {
-  const getSrc = () => getS3Url(`/profile-img/${path}`);
-  const [src, setSrc] = useState(getSrc());
+  // const getSrc = () => getS3Url(`/profile-img/${path}`);
+  // const [src, setSrc] = useState(getSrc());
 
-  useEffect(() => {
-    setSrc(getSrc());
-  }, [path]);
+  // useEffect(() => {
+  //   setSrc(getSrc());
+  // }, [path]);
 
   return (
     <div
@@ -25,7 +25,7 @@ const ProfileImg = ({ path, width, margin }) => {
       }}
     >
       <img
-        src={src}
+        // src={src}
         style={{
           position: "absolute",
           top: "0px",

@@ -8,6 +8,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 const Navigation = () => {
+  const location = useLocation();
   const styleContainer = {
     position: "fixed",
     left: "0px",
@@ -22,12 +23,13 @@ const Navigation = () => {
     display: "flex",
     height: "56px",
   };
+  if (location.pathname.startsWith("/create")) return <></>;
   return (
     <div style={styleContainer}>
       <div style={styleNavigation}>
         <NavigationMenu text="홈" page="/home" />
         <NavigationMenu text="지난 여행" page="/travel" />
-        <NavigationMenu text="여행 추가" page="/add" />
+        <NavigationMenu text="여행 추가" page="/create" />
         <NavigationMenu text="프로필 " page="/profile" />
       </div>
     </div>
@@ -63,7 +65,7 @@ const NavigationMenu = ({ text, page }) => {
         return <HomeRoundedIcon style={styleIcon} />;
       case "/travel":
         return <FlightLandRoundedIcon style={styleIcon} />;
-      case "/add":
+      case "/create":
         return <AddRoundedIcon style={styleIcon} />;
       case "/profile":
         return <AccountCircleRoundedIcon style={styleIcon} />;

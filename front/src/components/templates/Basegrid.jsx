@@ -11,18 +11,22 @@ const BaseGrid = ({ children }) => {
   const location = useLocation();
   const pathname = location.pathname;
   const [loginInfo, setLoginInfo] = useRecoilState(loginInfoAtom);
-
   useEffect(() => {
     const f = async () => {
       if (loginInfo === null) {
         const loginInfoRes = await axios.get("/auth/logininfo");
-        if (loginInfoRes.status !== 200) return;
-        if (!loginInfoRes.data?.id) setLoginInfo(undefined);
+        console.log(loginInfoRes);
+        console.log(loginInfoRes.status !== 200);
+        console.log(!loginInfoRes.data?.id);
+        if (loginInfoRes.status !== 200 || !loginInfoRes.data?.id)
+          window.location.href = "/login";
+        console.log("asd");
         setLoginInfo(loginInfoRes.data);
       }
     };
+    if (pathname.startsWith("/login")) return;
     f();
-  }, [loginInfo]);
+  }, [JSON.stringify(loginInfo)]);
 
   const styleGrid = {
     width: "100%",
@@ -37,11 +41,6 @@ const BaseGrid = ({ children }) => {
     paddingBottom: "calc(56px + 24px + env(safe-area-inset-bottom))",
     overflowX: "hidden",
   };
-
-  if (loginInfo === null) return null;
-  if (!pathname.startsWith("/login") && !loginInfo) {
-    return <Navigate to="/login" replace />;
-  }
   if (pathname.startsWith("/login"))
     return <div style={styleGrid}>{children}</div>;
   return (

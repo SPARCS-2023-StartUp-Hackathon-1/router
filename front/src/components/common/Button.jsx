@@ -20,7 +20,7 @@ const Button = ({
   };
   const getColor = () => {
     switch (type) {
-      case "primary":
+      case "gradient":
         return {
           background: "linear-gradient(var(--gradient-red))",
           color: "var(--white)",
@@ -30,6 +30,11 @@ const Button = ({
           textDecoration: "underline",
           color: "var(--red)",
           textUnderlineOffset: 3,
+        };
+      case "red":
+        return {
+          backgroundColor: disabled ? "var(--gray-c)" : "var(--red)",
+          color: "var(--white)",
         };
       default:
         return {};
