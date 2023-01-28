@@ -1,6 +1,11 @@
 import cv2
 import numpy as np
+import requests
+from PIL import Image
 from math import radians, cos, sin, asin, sqrt
+from pillow_heif import register_heif_opener
+
+register_heif_opener()
 
 def isImageCloserDist(img1, img2, diffMax=1):
     """
@@ -90,19 +95,51 @@ def l1Distance(v1, v2):
 def similarity(v1, v2):
     return 1 / l1Distance(v1, v2)
 
-def clusteringDeep(images):
-    clusters = [[image] for image in images] # fixme
+def loadImagesFromUrl(imageUrl):
+    imageData = requests.get(imageUrl, stream=True).raw
+    return Image.open(imageData)
 
+def isImageCloserFeture(img1, img2):
+    val1 = similarity(img1["vectorNp"], img2["vectorNp"])
+    if val1 >= 0.004: return True
+    val2 = similarityImage(img1["file"], img2["file"])
+    if val2 >= 30: return True
+    if val1 >= 0.003 and val2 >= 13: return True
+    return False
+
+def clusteringDeep(images):
+    # 내부 특징 유사도 기반 클러스터링
+    for image in images:
+        image["vectorNp"] = np.asarray(image["vector"])
+        image["file"] = loadImagesFromUrl(image["url"])
+
+    clusters = []
+    subgroup = [images[0]]
+    for i in range(1, len(images)):
+        isCloser = False
+        for subgroupImageIndex in reversed(range(len(subgroup))):
+            subgroupImage = subgroup[subgroupImageIndex]
+            if isImageCloserFeture(subgroupImage, images[i]): isCloser = True
+            if isCloser: break
+        
+        if isCloser:
+            subgroup.append(images[i])
+        else:
+            clusters.append(subgroup)
+            subgroup = [images[i]]
+    if len(subgroup) > 0:
+        clusters.append(subgroup)
+
+    # 글로벌 벡터 추출 및 베스트 이미지 선정
     result = []
     for cluster in clusters:
-        vectors = [np.asarray(image["vector"]) for image in cluster]
-        globalVector = maxpooling(vectors)
+        globalVector = maxpooling([image["vectorNp"] for image in cluster])
         result.append({
             "images": cluster,
             "vector": globalVector.tolist(),
             "mainImage": cluster[0] # fixme
         })
-    return [{ "images": cluster, "vector": [0,0,0], "mainImage": cluster[0] } for cluster in clusters]
+    return result
 
 def latlongMedian(images):
     latitudes = [image["latitude"] for image in images]
