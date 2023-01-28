@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Header from "./Header";
 import Navigation from "./Navigation";
-import { useLocation, Navigate, useNavigation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import axios from "utils/axios";
 
 import { useRecoilState } from "recoil";
@@ -11,7 +11,6 @@ const BaseGrid = ({ children }) => {
   const location = useLocation();
   const pathname = location.pathname;
   const [loginInfo, setLoginInfo] = useRecoilState(loginInfoAtom);
-  const navigation = useNavigation();
   useEffect(() => {
     const f = async () => {
       if (loginInfo === null) {
