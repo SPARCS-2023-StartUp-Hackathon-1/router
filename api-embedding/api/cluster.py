@@ -93,6 +93,11 @@ def similarity(v1, v2):
 def clusteringDeep(images):
     return [{ "images": [image], "vector": [0,0,0], "mainImage": image } for image in images]
 
+def latlongMedian(images):
+    latitudes = [image["latitude"] for image in images]
+    longitudes = [image["longitude"] for image in images]
+    return np.median(latitudes), np.median(longitudes)
+
 def imageSet2res(imageSet):
     return {
         "mainImage": imageSet["mainImage"]["id"],
@@ -104,8 +109,12 @@ def clusters2res(clusters):
     res = []
     for cluster in clusters:
         imageSets = [imageSet2res(imageSet) for imageSet in cluster]
+        latitude, longitude = latlongMedian([image for x in cluster for image in x["images"]])
         res.append({
             "name": "", # FIXME
+            "location": "", # FIXME
+            "latitude": latitude,
+            "longitude": longitude,
             "startTime": cluster[0]["images"][0]["time"],
             "endTime": cluster[-1]["images"][-1]["time"],
             "mainImage": cluster[0]["mainImage"]["id"],
