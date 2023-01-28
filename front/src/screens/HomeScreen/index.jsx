@@ -9,7 +9,7 @@ const HomeScreen = () => {
     marginBottom: 16,
   };
   return (
-    <div style={{ paddingTop: 12 }}>
+    <div style={{ marginTop: 110 }}>
       <div className="font-subtitle-small" style={styleTitle}>
         안녕하세요, <b>사용자</b> 님!
         <br />

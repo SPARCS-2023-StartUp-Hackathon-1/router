@@ -3,7 +3,12 @@ import ManImg from "static/assets/Man.png";
 
 const Accompany = () => {
   return (
-    <div style={{ position: "relative" }}>
+    <div
+      style={{
+        position: "relative",
+        marginTop: "calc(30px + env(safe-area-inset-top))",
+      }}
+    >
       <img
         src={ManImg}
         alt={"camera"}
