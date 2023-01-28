@@ -20,7 +20,7 @@ const CurrentTravel = () => {
         <ProfileImg width={32} margin="0 0 0 -8px" />
         <ProfileImg width={32} margin="0 0 0 -8px" />
         <div className="font-text-small" style={{ marginLeft: 12 }}>
-          지금까지 8개의 핀이 기록되었어요
+          지금까지 <u>8</u>개의 핀이 기록되었어요
         </div>
       </div>
     </PhotoBox>
