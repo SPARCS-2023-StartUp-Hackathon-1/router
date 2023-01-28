@@ -26,6 +26,7 @@ router.post("/upload/getPUrl", async (req, res) => {
     });
     const image = await imageDoc.save();
     const key = `image-ori/${image._id}`;
+    const keyForView = `image-view/${image._id}`;
     awsS3.getUploadPUrlPost(key, type, (err, data) => {
       if (err) {
         console.error(err);
@@ -33,10 +34,21 @@ router.post("/upload/getPUrl", async (req, res) => {
       }
       data.fields["Content-Type"] = type;
       data.fields["key"] = key;
-      res.json({
-        id: image._id,
-        url: data.url,
-        fields: data.fields,
+
+      awsS3.getUploadPUrlPost(keyForView, type, (err, dataV) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send("internal server error");
+        }
+        dataV.fields["Content-Type"] = type;
+        dataV.fields["key"] = keyForView;
+        res.json({
+          id: image._id,
+          url: data.url,
+          urlV: dataV.url,
+          fields: data.fields,
+          fieldsV: dataV.fields,
+        });
       });
     });
   } catch (e) {
