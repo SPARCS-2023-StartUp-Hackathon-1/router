@@ -34,8 +34,7 @@ const loginComplete = (req, res, userData) => {
     else if (!result) joinus(req, res, userData);
     else {
       login(req, result.id, result.nickname);
-      //   res.send("ok login");
-      res.redirect(loadenv.frontUrl);
+      res.send("ok login");
     }
   });
 };
