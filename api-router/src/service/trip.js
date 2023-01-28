@@ -119,14 +119,12 @@ const createHandler = async (req, res) => {
 
 const pinlistHandler = async (req, res) => {
   try {
-    const trip = await tripModel.findOne({ _id: req.body.tripId });
+    const trip = await tripModel.findOne({ _id: req.params.tripId });
     // .populate("pins");
 
     // get only pins _id, latitudem logitude
     const pinlist = [];
     for (const pinId of trip.pins) {
-      console.log(pinId);
-
       const pin = await pinModel.findOne({ _id: pinId });
       // console.log(pin["longitude"]);
 
