@@ -4,6 +4,7 @@ from typing import List, Union
 from datetime import datetime
 from image import getImageExifFromUrl
 from vit import getEmbeddingVectorFromUrl
+from cluster import dist
 
 import pandas as pd
 
@@ -14,12 +15,10 @@ class ExtractBody(BaseModel):
     imageUrl: str
 
 class clusteringBody(BaseModel):
-    time: datetime #??
+    time: datetime
     latitude: float
     longitude: float
-    vector: List # ??
-    valid: bool
-
+    
 @app.post("/extract")
 def extractHandler(body: ExtractBody):
     try:
@@ -40,28 +39,22 @@ def extractHandler(body: ExtractBody):
 def clusteringHandler(body: [clusteringBody]):
     try:
         sort_body = body.sorted(key=lambda x: x[0]) # sort by date
-        groupby_date =[]
+        cluster =[]
         subgroup = [sort_body[0]]
         for i in range(1, len(image)):
-            if sort_body[i-1].datetime != sort_body[i].datetime:
-                groupby_date.append(subgroup)
+            if sort_body[i-1].datetime.date!= sort_body[i].datetime.date or 1 < dist(sort_body[i-1].latitude, sort_body[i-1].longitude, sort_body[i].latitude, sort_body[i].longitude):
+                cluster.append(subgroup)
                 subgroup=[]
             else:
-                subgroup.append(sort_body[i-1])
+                subgroup.append(sort_body[i])
+        return {
+            "cluster" : cluster
+        }
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=400, detail="error")
 
 
 
 
-
-
-
-        # group by date
-        # in date group, group by lati,logitude
-        # return result
-
-
-
-            
-
-
-
+        
