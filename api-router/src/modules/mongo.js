@@ -26,6 +26,9 @@ const pinElementSchema = Schema({
 const pinSchema = Schema({
   name: { type: String, default: "" },
   note: { type: String, default: "" },
+  location: { type: String, default: "" },
+  latitude: { type: Number },
+  longitude: { type: Number },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
   mainImage: { type: Schema.Types.ObjectId, ref: "Image", required: true },
