@@ -4,7 +4,8 @@ const Accompany = () => {
   return (
     <div>
       <div className="font-title-large">
-        이번 여행의 동행자를 추가해 주세요.
+        이번 여행의 동행자를
+        <br /> 추가해 주세요.
       </div>
       <div
         className="font-subtitle-small"

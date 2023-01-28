@@ -10,7 +10,9 @@ const Photo = ({ photo, setPhoto }) => {
   return (
     <div>
       <div className="font-title-large">
-        기억하고 싶은 이번 여행의 사진을 추가해 주세요.
+        기억하고 싶은 <br />
+        이번 여행의 사진을
+        <br /> 추가해 주세요.
       </div>
       {/* {photo && <img src={URL.createObjectURL(photo)} alt="preview" />} */}
       <div
