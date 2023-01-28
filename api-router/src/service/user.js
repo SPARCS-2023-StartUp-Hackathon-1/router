@@ -1,9 +1,9 @@
-const { tripModel, userModel } = require("../modules/mongo");
+const { userModel } = require("../modules/mongo");
 
-const listHandler = async (req, res) => {
+const triplistHandler = async (req, res) => {
   try {
     const user = await userModel.findOne({ id: req.userId }).populate("trips");
-    res.send(user.trips); // need to test
+    res.send(user.trips);
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -13,5 +13,5 @@ const listHandler = async (req, res) => {
 };
 
 module.exports = {
-  listHandler,
+  triplistHandler,
 };
