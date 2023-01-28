@@ -6,7 +6,7 @@ router.use(require("../middleware/auth"));
 
 router.post("/create", tripHandlers.createHandler);
 router.get("/pinlist/:tripId", tripHandlers.pinlistHandler);
-// router.get("/info", tripHandlers.InfoHandler);
+router.get("/info/:tripId", tripHandlers.infoHandler);
 // router.post("edit ~")
 // router.post("remove ~")
 

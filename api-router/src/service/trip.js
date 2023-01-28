@@ -148,7 +148,9 @@ const pinlistHandler = async (req, res) => {
 
 const infoHandler = async (req, res) => {
   try {
-    const tripObject = await tripModel.findOne({ _id: req.tripId }).lean();
+    const tripObject = await tripModel
+      .findOne({ _id: req.params.tripId })
+      .lean();
     res.send(tripObject);
   } catch (err) {
     console.log(err);
