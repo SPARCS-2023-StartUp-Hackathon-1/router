@@ -1,28 +1,165 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "components/common/Button";
+import axios from "utils/axios";
+import axiosOri from "axios";
+import FileDownloadDoneRoundedIcon from "@mui/icons-material/FileDownloadDoneRounded";
 
-const Photo = ({ photo, setPhoto }) => {
-  const onChange = (e) => {
-    // if (e.target.files[0]) {
-    //   setPhoto(e.target.files[0]);
-    // }
+const Photo = ({ info, setInfo }) => {
+  const inputImage = useRef(null);
+  const [profileAlert, setProfileAlert] = useState(null);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (profileAlert === "LOADING") return;
+  //   const timeoutID = setTimeout(() => setProfileAlert(null), 1500);
+  //   return () => clearTimeout(timeoutID);
+  // }, [profileAlert]);
+
+  const handleUploadProfileImage = async () => {
+    setProfileAlert("LOADING");
+    const images = inputImage.current?.files;
+    const imageUploadSuccessList = [];
+    const imageUploadFailList = [];
+    for (const image of images) {
+      try {
+        if (!image) return;
+        const { data } = await axios.post("/image/upload/getPUrl", {
+          type: image.type,
+        });
+        try {
+          if (!data.url || !data.fields) throw new Error("Upload image fail");
+          const formData = new FormData();
+          for (const key in data.fields) {
+            formData.append(key, data.fields[key]);
+          }
+          formData.append("file", image);
+          const res = await axiosOri.post(data.url, formData);
+          if (res.status !== 204) throw new Error("Upload image fail");
+          const imageId = data.id;
+          const res2 = await axios.post("/image/upload/complete", {
+            id: imageId,
+          });
+          if (!res2?.data?.result) throw new Error("Upload image fail");
+          // 사진 하나 업로드 성공
+          imageUploadSuccessList.push(data.id);
+          console.log();
+        } catch (e) {
+          // 사진 하나 업로드 실패
+          imageUploadFailList.push(data.id);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    setInfo({
+      ...info,
+      total: images.length + (info.total ?? 0),
+      photos: (info.photos ?? []).concat(imageUploadSuccessList),
+    });
+    if (!imageUploadSuccessList.length) setProfileAlert("FAIL");
+    else {
+      setMessage(
+        <>
+          <u>
+            <b>{images.length}</b>
+          </u>
+          장의 사진 중{" "}
+          <u>
+            <b>{imageUploadSuccessList.length}</b>
+          </u>
+          장의 사진이 추가 되었어요.
+        </>
+      );
+      setProfileAlert("SUCCESS");
+    }
+    console.log(imageUploadSuccessList, imageUploadFailList);
   };
-
+  console.log(info.total, info.photos);
+  const style = {
+    backgroundColor:
+      profileAlert === "SUCCESS"
+        ? "var(--red)"
+        : profileAlert === "FAIL"
+        ? "var(--red)"
+        : profileAlert === "LOADING"
+        ? "var(--light-red)"
+        : "var(--red)",
+    cursor: profileAlert === "LOADING" ? "default" : "pointer",
+    height: 60,
+  };
+  const onClick = () => {
+    if (profileAlert !== "LOADING") {
+      inputImage.current.click();
+    }
+  };
   return (
-    <div>
+    <>
       <div className="font-title-large">
         기억하고 싶은 <br />
         이번 여행의 사진을
         <br /> 추가해 주세요.
       </div>
-      {/* {photo && <img src={URL.createObjectURL(photo)} alt="preview" />} */}
       <div
         className="font-text-large"
-        style={{ marginTop: "20px", color: "var(--red)" }}
+        style={{ margin: "20px 0 auto", color: "var(--red)" }}
       >
-        <b>사진 추가하기</b> 버튼을 눌러 사진을 추가할 수 있어요.
+        {profileAlert === "FAIL" ? (
+          <>
+            사진 업로드에 <b>실패</b>했어요. <br /> 다시 시도해주세요.
+          </>
+        ) : profileAlert === "SUCCESS" ? (
+          message
+        ) : (
+          <>
+            <b>사진 추가하기</b> 버튼을 눌러 사진을 추가할 수 있어요.
+          </>
+        )}
       </div>
-      <input type="file" onChange={onChange} />
-    </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          columnGap: 12,
+        }}
+      >
+        <Button
+          type="red"
+          className="font-subtitle-small"
+          width="100%"
+          padding="18px 0"
+          radius={30}
+          style={style}
+          onClick={onClick}
+        >
+          <input
+            type="file"
+            accept="image/jpg, image/png, image/jpeg, image/heic"
+            hidden
+            onChange={handleUploadProfileImage}
+            ref={inputImage}
+            multiple
+          />
+          {profileAlert === "SUCCESS"
+            ? "사진 더 추가하기"
+            : profileAlert === "FAIL"
+            ? "다시 사진 추가하기"
+            : profileAlert === "LOADING"
+            ? "업로드 중"
+            : "사진 추가하기"}
+        </Button>
+        <Button
+          type="red"
+          width={60}
+          padding={18}
+          radius={30}
+          style={style}
+          // onClick={()=>navigate()}
+        >
+          <FileDownloadDoneRoundedIcon fontSize="medium" />
+        </Button>
+      </div>
+    </>
   );
 };
 

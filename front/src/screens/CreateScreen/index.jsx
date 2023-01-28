@@ -28,7 +28,7 @@ const CreateScreen = () => {
       case "accompany":
         return <Accompany />;
       case "photo":
-        return <Photo />;
+        return <Photo info={info} setInfo={setInfo} />;
       default:
         return "";
     }
@@ -57,11 +57,11 @@ const CreateScreen = () => {
         <Button
           type="red"
           className="font-subtitle-small"
-          width={342}
+          width="100%"
           padding="18px 0"
           radius={30}
           disabled={disabled}
-          style={{ margin: "0 auto" }}
+          style={{ margin: "0 auto", height: 60 }}
           onClick={onClickNext}
         >
           다음

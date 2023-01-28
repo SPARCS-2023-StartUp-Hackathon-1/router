@@ -9,6 +9,7 @@ import BaseGrid from "components/templates/Basegrid";
 
 import HomeScreen from "screens/HomeScreen";
 import LoginScreen from "screens/LoginScreen";
+import PastScreen from "screens/PastScreen";
 import TravelScreen from "screens/TravelScreen";
 import CreateScreen from "screens/CreateScreen";
 import ProfileScreen from "screens/ProfileScreen";
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="*" element={<Navigate to="/home" replace />} />
             <Route path="/home" element={<HomeScreen />} />
             <Route path="/login" element={<LoginScreen />} />
+            <Route path="/past" element={<PastScreen />} />
             <Route path="/travel" element={<TravelScreen />} />
             <Route path="/create" element={<CreateScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />

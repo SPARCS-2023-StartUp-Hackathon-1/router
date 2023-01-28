@@ -49,6 +49,7 @@ const Button = ({
     cursor: disabled ? "not-allowed" : "pointer",
     textAlign: "center",
     ...getColor(),
+    boxSizing: "border-box",
     ...style,
   };
 
