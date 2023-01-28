@@ -62,7 +62,7 @@ const LoginScreen = () => {
           onChangeLoginPw={setLoginPw}
         />
         <Button
-          type="primary"
+          type="gradient"
           className="font-subtitle-small"
           width={262}
           padding="16px 0 20px"
