@@ -5,7 +5,8 @@ const pinHandler = require("../service/pin");
 
 router.use(require("../middleware/auth"));
 
-router.post("/create", pinHandler.pincreateHandler);
+// router.post("/create", pinHandler.pincreateHandler);
+router.post("/info", pinHandler.infoHandler);
 // router.get("/elementlist", pinHandler.elementlistHandler);
 
 module.exports = router;

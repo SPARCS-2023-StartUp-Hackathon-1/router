@@ -68,10 +68,10 @@ router.post("/upload/complete", async (req, res) => {
         const extractRes = await axios.post(`${loadenv.embeddingUrl}/extract`, {
           imageUrl: `https://${loadenv.aws.s3BucketName}.s3.ap-northeast-2.amazonaws.com/${key}`,
         });
-        const { datetime, latitude, logitude, vector } = extractRes.data;
+        const { datetime, latitude, longitude, vector } = extractRes.data;
         const newImage = await imageModel.findOneAndUpdate(
           { _id: req.body.id },
-          { time: datetime, latitude, logitude, vector: vector.toString() },
+          { time: datetime, latitude, longitude, vector: vector.toString() },
           { new: true }
         );
         res.json({ result: true, newImage });
