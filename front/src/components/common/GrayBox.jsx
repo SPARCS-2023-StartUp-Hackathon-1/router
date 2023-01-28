@@ -10,6 +10,7 @@ const GrayBox = ({ width, height, radius = 16, padding, style, children }) => {
     position: "relative",
     padding: padding,
     boxSizing: "border-box",
+    cursor: "pointer",
     ...style,
   };
   return <div style={styleBox}>{children}</div>;

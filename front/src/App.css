@@ -16,7 +16,7 @@ body {
   --gray-c: #ccc;
   --gray-9: #999;
   --gradient-red: 90deg, #de552a 0%, #efaa95 100%; /* linear-gradient(var(--gradient-red)) */
-  touch-action: pan-y;
+  /* touch-action: pan-y; */
 }
 
 body::-webkit-scrollbar,

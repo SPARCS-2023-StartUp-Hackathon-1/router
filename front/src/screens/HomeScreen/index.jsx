@@ -1,6 +1,7 @@
 import React from "react";
 import CurrentTravel from "./CurrentTravel";
 import TravelMenu from "./TravelMenu";
+import PastTravel from "./PastTravel";
 
 const HomeScreen = () => {
   const styleContainer = {
@@ -19,6 +20,7 @@ const HomeScreen = () => {
       </div>
       <CurrentTravel />
       <TravelMenu />
+      <PastTravel />
     </div>
   );
 };

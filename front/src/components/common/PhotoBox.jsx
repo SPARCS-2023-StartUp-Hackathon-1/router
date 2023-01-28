@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 // import { getS3Url } from "tools/image";
 
-const PhotoBox = ({ path, width, height = 228, children }) => {
+const PhotoBox = ({ path, width, height = 100, children }) => {
   const styleBox = {
     width: width,
     height: height,
@@ -15,6 +15,7 @@ const PhotoBox = ({ path, width, height = 228, children }) => {
     padding: "0 20px 16px",
     color: "var(--white)",
     zIndex: -2,
+    cursor: "pointer",
   };
   //   const getSrc = () => getS3Url(`/profile-img/${path}`);
   //   const [src, setSrc] = useState(getSrc());
