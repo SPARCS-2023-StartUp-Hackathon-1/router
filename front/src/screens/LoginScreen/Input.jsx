@@ -16,11 +16,11 @@ const Input = () => {
     <div style={styleInputGrid}>
       <div style={styleInput}>
         <div className="font-subtitle-small">아이디</div>
-        <input className="font-text"></input>
+        <input className="font-text-large"></input>
       </div>
       <div style={styleInput}>
         <div className="font-subtitle-small">비밀번호</div>
-        <input type="password" className="font-text"></input>
+        <input type="password" className="font-text-large"></input>
       </div>
     </div>
   );
