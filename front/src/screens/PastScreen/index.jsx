@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "utils/axios";
 import PhotoBox from "components/common/PhotoBox";
+import loginInfoAtom from "recoil/logininfo/atom";
+import { useRecoilValue } from "recoil";
 
 const PastScreen = () => {
+  const [trips, setTrips] = useState([]);
+  const loginInfo = useRecoilValue(loginInfoAtom);
+  useEffect(() => {
+    const f = async () => {
+      const response = await axios.get("/user/triplist", {
+        params: {
+          userId: loginInfo.id,
+        },
+      });
+      if (response.status === 200) setTrips(response.data);
+    };
+    if (loginInfo?.id) f();
+  }, [loginInfo]);
+  console.log(trips);
   return (
     <div style={{ position: "relative", marginTop: 110 - 32 }}>
       <div
@@ -29,9 +46,10 @@ const PastScreen = () => {
           rowGap: 12,
         }}
       >
-        <PhotoBox />
-        <PhotoBox />
-        <PhotoBox />
+        {trips.length &&
+          trips.map((trip) => (
+            <PhotoBox path={trip._id} href={`/travel/${trip._id}`} />
+          ))}
       </div>
     </div>
   );

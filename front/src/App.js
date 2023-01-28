@@ -27,7 +27,7 @@ const App = () => {
             <Route path="/home" element={<HomeScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/past" element={<PastScreen />} />
-            <Route path="/travel" element={<TravelScreen />} />
+            <Route path="/travel/:tripId" element={<TravelScreen />} />
             <Route path="/create" element={<CreateScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="/testImageUpload" element={<TestImageUpload />} />
