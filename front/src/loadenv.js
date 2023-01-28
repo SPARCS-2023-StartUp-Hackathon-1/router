@@ -1,7 +1,3 @@
-import dotenv from "dotenv";
-
-dotenv.config();
-
 const env = { ...process.env, ...window["env"] };
 
 const nodeEnv = env.NODE_ENV;
