@@ -73,6 +73,7 @@ const createHandler = async (req, res) => {
         startTime: startTime.toString(),
         endTime: endTime.toString(),
         progress: progress,
+        mainImage: clusters[0]["imageSets"][0]["mainImage"],
         pins: pins,
       });
       await trip.save();

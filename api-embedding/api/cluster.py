@@ -160,8 +160,8 @@ def clusters2res(clusters):
         imageSets = [imageSet2res(imageSet) for imageSet in cluster]
         latitude, longitude = latlongMedian([image for x in cluster for image in x["images"]])
         res.append({
-            "name": "", # FIXME
-            "location": aroundSearch(latitude, longitude),
+            "name": aroundSearch(latitude, longitude, ver="2"),
+            "location": aroundSearch(latitude, longitude, ver="1"),
             "latitude": latitude,
             "longitude": longitude,
             "startTime": cluster[0]["images"][0]["time"],
