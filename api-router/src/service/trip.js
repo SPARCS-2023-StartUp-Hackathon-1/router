@@ -9,6 +9,10 @@ const createHandler = async (req, res) => {
     // 각각의 pin을 trip의 pins[]에 저장
     // 그 객체를 trip의 pins로
 
+    // db에서 이미지 정보 찾기
+    // fastapi에 api 콜해서 클러스터링 결과 받아오기
+    // 클러스터링 결과를 DB에 저장
+
     const user = await userModel.findOne({ id: req.userId }).populate("trips");
     let trip = new tripModel({
       name: name,
