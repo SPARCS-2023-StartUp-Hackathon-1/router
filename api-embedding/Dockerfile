@@ -1,5 +1,8 @@
 FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
 
+RUN apt-get update && \
+    apt-get -y install libgl1-mesa-glx libglib2.0-0
+
 # Copy repo
 WORKDIR /home
 COPY . .
@@ -28,3 +31,4 @@ RUN mkdir models && \
 # Run container
 EXPOSE 8080
 CMD ["sh", "-c", "torchserve --ts-config config.properties --start && cd api && python -m uvicorn main:app --port 8080 --host 0.0.0.0"]
+# CMD ["sh", "-c", "torchserve --ts-config config.properties --start & tail -f /dev/null"]
