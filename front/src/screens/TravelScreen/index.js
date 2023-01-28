@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "utils/axios";
+import { useParams } from "react-router-dom";
 import { GoogleMap, LoadScript, InfoWindow } from "@react-google-maps/api";
 import GrayBox from "components/common/GrayBox";
 import "./google_map.css";
@@ -31,25 +33,23 @@ const positions = [
     lng: 126.8926,
   },
 ];
-const options = {
-  border: "1px solid #000000",
-  strokeColor: "#ffffff",
-  strokeOpacity: 1,
-  strokeWeight: 5,
-  fillColor: "#cccccc",
-  fillOpacity: 1,
-  // clickable: false,
-  draggable: false,
-  editable: false,
-  visible: true,
-  radius: 200,
-  zIndex: 77,
-};
-
 const TravelScreen = () => {
+  const { tripId } = useParams();
+  const [pinList, setPinList] = useState([]);
   useEffect(() => {
     document.getElementById("root").style.height = "calc(100dvh + 1px)";
-  }, []);
+    const f = async () => {
+      const response = await axios.get(`/trip/pinlist/${tripId}`, {
+        params: {
+          tripId: tripId,
+        },
+      });
+      console.log(response);
+      if (response.status === 200) setPinList(response.data);
+    };
+    if (tripId) f();
+  }, [tripId]);
+  console.log(pinList);
   return (
     <>
       <GrayBox
@@ -74,8 +74,12 @@ const TravelScreen = () => {
       <LoadScript googleMapsApiKey="AIzaSyB89A46XhoFozfegjbh7gnPzh9FiSQwRbo">
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={center} // set senter
-          zoom={15}
+          center={
+            pinList.length
+              ? { lat: pinList[0].latitude, lng: pinList[0].longitude }
+              : center
+          } // set center
+          zoom={10}
         >
           {/* Child components, such as markers, info windows, etc. */}
           {/* <Marker
@@ -85,7 +89,31 @@ const TravelScreen = () => {
           position={positions[0]}
         /> */}
           {/* <Circle center={center} options={options} /> */}
-          <InfoWindow position={positions[2]}>
+          {pinList.length &&
+            pinList.map((pin) => (
+              <InfoWindow
+                key={pin._id}
+                position={{ lat: pin.latitude, lng: pin.longitude }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    height: 50,
+                    width: 50,
+                    borderRadius: "50%",
+                    backgroundColor: "var(--gray-c)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "solid 4px var(--white)",
+                    boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.3)",
+                    margin: "12px",
+                    cursor: "pointer",
+                  }}
+                />
+              </InfoWindow>
+            ))}
+          {/* <InfoWindow position={positions[2]}>
             <div
               style={{
                 position: "absolute",
@@ -136,7 +164,7 @@ const TravelScreen = () => {
                 cursor: "pointer",
               }}
             />
-          </InfoWindow>
+          </InfoWindow> */}
         </GoogleMap>
       </LoadScript>
     </>

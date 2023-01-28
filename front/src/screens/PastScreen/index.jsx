@@ -9,11 +9,8 @@ const PastScreen = () => {
   const loginInfo = useRecoilValue(loginInfoAtom);
   useEffect(() => {
     const f = async () => {
-      const response = await axios.get("/user/triplist", {
-        params: {
-          userId: loginInfo.id,
-        },
-      });
+      const response = await axios.get(`/user/triplist/${loginInfo.id}`);
+      console.log(response);
       if (response.status === 200) setTrips(response.data);
     };
     if (loginInfo?.id) f();
@@ -48,7 +45,11 @@ const PastScreen = () => {
       >
         {trips.length &&
           trips.map((trip) => (
-            <PhotoBox path={trip._id} href={`/travel/${trip._id}`} />
+            <PhotoBox
+              key={trip._id}
+              path={trip.mainImage}
+              href={`/travel/${trip._id}`}
+            />
           ))}
       </div>
     </div>
