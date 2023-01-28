@@ -24,7 +24,7 @@ const LoginScreen = () => {
         <Circle size={394} bottom={-278} right={-111} />
         <div style={{ color: "var(--red)", textAlign: "center" }}>
           <div className="font-logo-large">ROUTER</div>
-          <div className="font-text">routes taken, memories retraced</div>
+          <div className="font-text-large">routes taken, memories retraced</div>
         </div>
         <Input />
         <Button
