@@ -7,16 +7,16 @@ const {
   pinModel,
 } = require("../modules/mongo");
 
-const l = require("./test");
+// const l = require("./test");
 
 const createHandler = async (req, res) => {
   const { name, progress, imageIds } = req.body;
   try {
     // db에서 이미지 정보 찾기
     const imageObjects = [];
-    // for (const imageId of imageIds) {
-    for (const image of l) {
-      // const image = await imageModel.findOne({ _id: imageId });
+    for (const imageId of imageIds) {
+      // for (const image of l) {
+      const image = await imageModel.findOne({ _id: imageId });
       imageObjects.push({
         id: image._id,
         time: image.time,
@@ -26,18 +26,16 @@ const createHandler = async (req, res) => {
       });
     }
 
-    const imageObjects2 = [imageObjects[0], imageObjects[1]];
-
     try {
       // fastapi에 api 콜해서 클러스터링 결과 받아오기
       const clusterRes = await axios.post(
         `${loadenv.embeddingUrl}/clustering`,
         {
-          images: imageObjects2,
+          images: imageObjects,
         }
       );
-      console.log(clusterRes);
-      return;
+      // console.log(clusterRes.data);
+      // return;
       // 일단 연속 사진이 없는 경우
       const { cluster, startTime, endTime } = clusterRes;
       const pins = [];
