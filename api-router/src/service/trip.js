@@ -172,7 +172,20 @@ const pinlistHandler = async (req, res) => {
   }
 };
 
+const infoHandler = async (req, res) => {
+  try {
+    const tripObject = await tripModel.findOne({ _id: req.tripId }).lean();
+    res.send(tripObject);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: "/trip/info: internal server error",
+    });
+  }
+};
+
 module.exports = {
   createHandler,
   pinlistHandler,
+  infoHandler,
 };
