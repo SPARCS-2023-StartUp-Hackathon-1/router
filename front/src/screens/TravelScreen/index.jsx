@@ -9,7 +9,7 @@ const TravelScreen = () => {
         총 <b style={{ textDecoration: "underline" }}>8</b>
         건의 여행이 있어요
       </div>
-      <input className="font-text-large" placeholder="여행 검색하기"></input>
+      <input className="font-text-large" placeholder="여행 검색하기" />
       <div
         style={{
           display: "flex",
