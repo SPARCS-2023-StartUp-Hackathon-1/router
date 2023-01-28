@@ -30,7 +30,6 @@ const Photo = ({ info, setInfo }) => {
       </>
     );
   }, [info.photos?.length, info.total]);
-
   const handleUploadProfileImage = async () => {
     setProfileAlert("LOADING");
     const images = inputImage.current?.files;
@@ -71,9 +70,11 @@ const Photo = ({ info, setInfo }) => {
           if (!res2?.data?.result) throw new Error("Upload image fail");
           // 사진 하나 업로드 성공
           imageUploadSuccessList.push(data.id);
+          console.log("success");
         } catch (e) {
           // 사진 하나 업로드 실패
           imageUploadFailList.push(data.id);
+          console.log("fail");
         }
       } catch (e) {
         console.error(e);

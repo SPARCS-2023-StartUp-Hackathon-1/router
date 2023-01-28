@@ -17,7 +17,7 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
     zIndex: 0,
     textDecoration: "none",
   };
-  const getSrc = () => getS3Url(`/image-ori/${path}`);
+  const getSrc = () => getS3Url(`/image-view/${path}`);
   const [src, setSrc] = useState(getSrc());
   return (
     <a style={styleBox} href={href}>
@@ -48,7 +48,7 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
             "linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)",
           zIndex: -1,
         }}
-        alt={`/profile-img/${path}`}
+        alt={`/``/${path}`}
       />
     </a>
   );

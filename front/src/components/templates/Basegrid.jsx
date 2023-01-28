@@ -23,7 +23,7 @@ const BaseGrid = ({ children }) => {
     if (pathname.startsWith("/login")) return;
     f();
   }, [JSON.stringify(loginInfo)]);
-
+  console.log("loginInfo", loginInfo);
   const styleGrid = {
     ...{
       width: "100%",

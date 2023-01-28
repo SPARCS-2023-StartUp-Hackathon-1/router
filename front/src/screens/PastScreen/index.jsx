@@ -22,7 +22,6 @@ const PastScreen = () => {
       trip.name.includes(search)
     );
   });
-  console.log(searchedTrips);
   return (
     <div style={{ position: "relative", marginTop: 110 - 32 }}>
       <div

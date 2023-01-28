@@ -50,7 +50,12 @@ const Name = ({ info, setInfo }) => {
         >
           지금 진행 중인 여행이에요
         </div>
-        <input type="checkbox" id="toggle" hidden />
+        <input
+          type="checkbox"
+          id="toggle"
+          hidden
+          onChange={(e) => console.log(e)}
+        />
 
         <label for="toggle" class="toggleSwitch">
           <span class="toggleButton"></span>
