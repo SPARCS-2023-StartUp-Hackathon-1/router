@@ -1,34 +1,74 @@
-const { userModel, tripModel } = require("../modules/mongo");
-const pincreateHandler = require("../service/pin");
+const loadenv = require("../../loadenv");
+const {
+  userModel,
+  tripModel,
+  imageModel,
+  pinModel,
+} = require("../modules/mongo");
 
 const createHandler = async (req, res) => {
   const { name, progress, imageIds } = req.body;
   try {
-    // cluster api 에서 반환하는 return data [pin[pinElements]]
-    // 받아온 리스트에 대해 pin/create 호출 그 안에서 [pinElement 생성]
-    // 각각의 pin을 trip의 pins[]에 저장
-    // 그 객체를 trip의 pins로
-
     // db에서 이미지 정보 찾기
-    // fastapi에 api 콜해서 클러스터링 결과 받아오기
-    // 클러스터링 결과를 DB에 저장
+    const imageObjects = [];
+    for (const imageId of imageIds) {
+      const image = await imageModel.findOne({ id: imageId });
+      imageObjects.push(image);
+    }
 
-    const user = await userModel.findOne({ id: req.userId }).populate("trips");
-    let trip = new tripModel({
-      name: name,
-      // startTime: startTime,
-      // endTime: endTime,
-      progress: progress,
-      pins: [], //  pins에는 clustering 한 결과 넣어줘야함, front의 pins 에는 그냥 사진들을 쭉 받아오는걸로?
-    });
+    try {
+      // fastapi에 api 콜해서 클러스터링 결과 받아오기
+      const clusterRes = await axios.post(
+        `${loadenv.embeddingUrl}/clustering`,
+        {
+          images: imageObjects,
+        }
+      );
+      // 일단 연속 사진이 없는 경우
+      const { cluster, startTime, endTime } = clusterRes;
+      const pins = [];
+      for (const subcluster of cluster) {
+        const subpin = [];
+        for (const pinelem of subcluster) {
+          let pinElement = new pinElement({
+            mainImage: pinelem[0].mainImage,
+            vector: pinelem[0].vector,
+            images: pinelem[0].images,
+          });
+          await pinElement.save();
+          subpin.push(pinElement._id);
+        }
+        let pin = new pinModel({
+          name: "",
+          note: "",
+          startTime: subpin[0].images[0].time.toString(),
+          endTime: subpin[subpin.length - 1].images[0].time.toString(),
+          mainImage: subpin[0].images[0],
+          imageSets: subpin,
+        });
+        await pin.save();
+        pins.push(pin._id);
 
-    // 추가작업 #####call pin/create api#####
+        const user = await userModel
+          .findOne({ id: req.userId })
+          .populate("trips");
 
-    await trip.save();
+        let trip = new tripModel({
+          name: name,
+          startTime: startTime.toString(),
+          endTime: endTime.toString(),
+          progress: progress,
+          pins: pins,
+        });
+        await trip.save();
 
-    user.trips.push(trip._id);
-    await user.save();
-    return res.send(trip._id); // trip._id send
+        user.trips.push(trip._id);
+        await user.save();
+        return res.send(trip._id); // trip._id send
+      }
+    } catch (error) {
+      console.log(error);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({
