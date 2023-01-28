@@ -13,7 +13,7 @@ const tripSchema = Schema({
   name: { type: String, required: true },
   startTime: { type: String, required: true },
   endTime: { type: String, required: true },
-  progress: { type: Boolean, default: true }, // false: 완료된 여행, true: 진행중인 여행
+  progress: { type: Boolean, default: false }, // false: 완료된 여행, true: 진행중인 여행
   pins: [{ type: Schema.Types.ObjectId, ref: "Pin" }],
 });
 
