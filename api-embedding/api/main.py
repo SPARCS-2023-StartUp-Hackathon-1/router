@@ -6,8 +6,6 @@ from image import getImageExifFromUrl
 from vit import getEmbeddingVectorFromUrl
 from cluster import clusteringLarge, clusteringDeep, clusters2res
 
-import pandas as pd
-
 app = FastAPI()
 
 class ExtractBody(BaseModel):
@@ -15,6 +13,7 @@ class ExtractBody(BaseModel):
 
 class ImageInfo(BaseModel):
     id: str
+    url: str
     time: datetime
     latitude: float
     longitude: float
