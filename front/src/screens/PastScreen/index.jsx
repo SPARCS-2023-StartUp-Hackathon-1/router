@@ -19,13 +19,8 @@ const PastScreen = () => {
           총 <b style={{ textDecoration: "underline" }}>8</b>
           건의 여행이 있어요
         </div>
-        <input className="font-text-large" placeholder="여행 검색하기"></input>
+        <input className="font-text-large" placeholder="여행 검색하기" />
       </div>
-<<<<<<< HEAD:front/src/screens/TravelScreen/index.jsx
-
-=======
-      <input className="font-text-large" placeholder="여행 검색하기" />
->>>>>>> 3bdaf81dcc97bd099b4910ec6182872f7938a903:front/src/screens/PastScreen/index.jsx
       <div
         style={{
           display: "flex",
