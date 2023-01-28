@@ -3,13 +3,28 @@ import { useNavigate } from "react-router-dom";
 import Button from "components/common/Button";
 import axios from "utils/axios";
 import axiosOri from "axios";
-import FileDownloadDoneRoundedIcon from "@mui/icons-material/FileDownloadDoneRounded";
+import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 
 const Photo = ({ info, setInfo }) => {
   const inputImage = useRef(null);
   const [profileAlert, setProfileAlert] = useState(null);
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+  const [disabled, setDisabled] = useState(true);
+  useEffect(() => {
+    setMessage(
+      <>
+        총{" "}
+        <u>
+          <b>{info.total}</b>
+        </u>
+        장의 사진 중{" "}
+        <u>
+          <b>{info.photos?.length}</b>
+        </u>
+        장의 사진이 추가 되었어요.
+      </>
+    );
+  }, [info.photos?.length, info.total]);
   // useEffect(() => {
   //   if (profileAlert === "LOADING") return;
   //   const timeoutID = setTimeout(() => setProfileAlert(null), 1500);
@@ -43,7 +58,6 @@ const Photo = ({ info, setInfo }) => {
           if (!res2?.data?.result) throw new Error("Upload image fail");
           // 사진 하나 업로드 성공
           imageUploadSuccessList.push(data.id);
-          console.log();
         } catch (e) {
           // 사진 하나 업로드 실패
           imageUploadFailList.push(data.id);
@@ -59,23 +73,11 @@ const Photo = ({ info, setInfo }) => {
     });
     if (!imageUploadSuccessList.length) setProfileAlert("FAIL");
     else {
-      setMessage(
-        <>
-          <u>
-            <b>{images.length}</b>
-          </u>
-          장의 사진 중{" "}
-          <u>
-            <b>{imageUploadSuccessList.length}</b>
-          </u>
-          장의 사진이 추가 되었어요.
-        </>
-      );
+      setDisabled(!info.photos?.length);
       setProfileAlert("SUCCESS");
     }
     console.log(imageUploadSuccessList, imageUploadFailList);
   };
-  console.log(info.total, info.photos);
   const style = {
     backgroundColor:
       profileAlert === "SUCCESS"
@@ -86,6 +88,19 @@ const Photo = ({ info, setInfo }) => {
         ? "var(--light-red)"
         : "var(--red)",
     cursor: profileAlert === "LOADING" ? "default" : "pointer",
+    height: 60,
+  };
+  const checkStyle = {
+    backgroundColor:
+      profileAlert === "LOADING"
+        ? "var(--gray-c)"
+        : info.photos?.length
+        ? "var(--red)"
+        : "var(--gray-c)",
+    cursor:
+      profileAlert === "LOADING" || !info.photos?.length
+        ? "default"
+        : "pointer",
     height: 60,
   };
   const onClick = () => {
@@ -106,10 +121,13 @@ const Photo = ({ info, setInfo }) => {
       >
         {profileAlert === "FAIL" ? (
           <>
-            사진 업로드에 <b>실패</b>했어요. <br /> 다시 시도해주세요.
+            사진 업로드에 <b>실패</b>했어요. <br />
+            {info.photos?.length ? message : "다시 시도해주세요."}
           </>
         ) : profileAlert === "SUCCESS" ? (
           message
+        ) : profileAlert === "LOADING" ? (
+          "사진을 업로드 중입니다."
         ) : (
           <>
             <b>사진 추가하기</b> 버튼을 눌러 사진을 추가할 수 있어요.
@@ -130,6 +148,7 @@ const Photo = ({ info, setInfo }) => {
           padding="18px 0"
           radius={30}
           style={style}
+          disabled={profileAlert === "LOADING"}
           onClick={onClick}
         >
           <input
@@ -153,10 +172,11 @@ const Photo = ({ info, setInfo }) => {
           width={60}
           padding={18}
           radius={30}
-          style={style}
+          style={checkStyle}
+          disabled={disabled}
           // onClick={()=>navigate()}
         >
-          <FileDownloadDoneRoundedIcon fontSize="medium" />
+          <CheckRoundedIcon fontSize="medium" />
         </Button>
       </div>
     </>
