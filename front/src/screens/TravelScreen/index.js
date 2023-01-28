@@ -27,15 +27,12 @@ const center = {
 const TravelScreen = () => {
   const { tripId } = useParams();
   const [pinList, setPinList] = useState([]);
+  const [tripInfo, setTripInfo] = useState(null);
   const [path, setPath] = useState([]);
   useEffect(() => {
     document.getElementById("root").style.height = "calc(100dvh + 1px)";
-    const f = async () => {
-      const response = await axios.get(`/trip/pinlist/${tripId}`, {
-        params: {
-          tripId: tripId,
-        },
-      });
+    const getPinList = async () => {
+      const response = await axios.get(`/trip/pinlist/${tripId}`);
       if (response.status === 200) {
         setPinList(response.data);
         const newPath = response.data.map((pin) => ({
@@ -45,9 +42,23 @@ const TravelScreen = () => {
         setPath(newPath);
       }
     };
-    if (tripId) f();
+    const getTripInfo = async () => {
+      const response = await axios.get(`/trip/info/${tripId}`);
+      if (response.status === 200) {
+        setTripInfo(response.data);
+      }
+    };
+    if (tripId) {
+      getPinList();
+      getTripInfo();
+    }
   }, [tripId]);
-
+  const parseDate = (date) => {
+    const parsedDate = new Date(date);
+    return `${parsedDate.getFullYear()}년 ${parsedDate.getMonth() + 1}월 ${
+      parsedDate.getDate() + 1
+    }일`;
+  };
   const options = {
     strokeColor: "#DE552A",
     strokeOpacity: 1,
@@ -76,9 +87,10 @@ const TravelScreen = () => {
         }}
       >
         <div className="font-text-large" style={{ marginBottom: 4 }}>
-          23년 1월 27일 - 현재
+          {parseDate(tripInfo?.startTime ?? "")} ~{" "}
+          {parseDate(tripInfo?.endTime ?? "")}
         </div>
-        <div className="font-subtitle-large">신나는 대전 여행</div>
+        <div className="font-subtitle-large">{tripInfo?.name ?? ""}</div>
       </GrayBox>
       <LoadScript googleMapsApiKey="AIzaSyB89A46XhoFozfegjbh7gnPzh9FiSQwRbo">
         <GoogleMap
