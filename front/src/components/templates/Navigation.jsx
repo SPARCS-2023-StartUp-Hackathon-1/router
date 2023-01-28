@@ -75,7 +75,7 @@ const NavigationMenu = ({ text, page }) => {
   return (
     <Link to={page} style={styleBox}>
       {getIcon(page)}
-      <div className="font-small-text" style={styleText}>
+      <div className="font-text-small" style={styleText}>
         {text}
       </div>
     </Link>
