@@ -19,7 +19,7 @@ const Header = () => {
       ? {}
       : {
           background: "rgba(255, 255, 255, 0.75)",
-          webkitBackdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
           BackdropFilter: "blur(20px)",
         }),
   };
