@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = () => {
+const Input = (props) => {
   const styleInputGrid = {
     margin: "auto 0 60px",
     width: 262,
@@ -16,11 +16,20 @@ const Input = () => {
     <div style={styleInputGrid}>
       <div style={styleInput}>
         <div className="font-subtitle-small">아이디</div>
-        <input className="font-text-large"></input>
+        <input
+          className="font-text-large"
+          value={props.loginId}
+          onChange={(e) => props.onChangeLoginId(e.target.value)}
+        />
       </div>
       <div style={styleInput}>
         <div className="font-subtitle-small">비밀번호</div>
-        <input type="password" className="font-text-large"></input>
+        <input
+          type="password"
+          className="font-text-large"
+          value={props.loginPw}
+          onChange={(e) => props.onChangeLoginPw(e.target.value)}
+        />
       </div>
     </div>
   );
