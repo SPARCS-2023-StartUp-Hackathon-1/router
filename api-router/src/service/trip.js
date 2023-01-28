@@ -20,6 +20,7 @@ const createHandler = async (req, res) => {
       const image = await imageModel.findOne({ _id: imageId });
       imageObjects.push({
         id: image._id,
+        url: `https://${loadenv.aws.s3BucketName}.s3.ap-northeast-2.amazonaws.com/image-ori/${image._id}`,
         time: image.time,
         latitude: image.latitude,
         longitude: image.longitude,
