@@ -8,7 +8,7 @@ const createHandler = async (req, res) => {
       name: name,
       startTime: startTime,
       endTime: endTime,
-      progress: progress, // ongoing 인지 done인지 어떻게 구별? => front 에서 받아와서 보내줌
+      progress: progress,
       pins: [], //  pins에는 clustering 한 결과 넣어줘야함, front의 pins 에는 그냥 사진들을 쭉 받아오는걸로?
     });
     await trip.save();
