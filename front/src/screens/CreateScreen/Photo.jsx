@@ -5,6 +5,12 @@ import axios from "utils/axios";
 import axiosOri from "axios";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 
+const UB = ({ children }) => (
+  <u>
+    <b>{children}</b>
+  </u>
+);
+
 const Photo = ({ info, setInfo }) => {
   const inputImage = useRef(null);
   const [profileAlert, setProfileAlert] = useState(null);
@@ -13,15 +19,8 @@ const Photo = ({ info, setInfo }) => {
   useEffect(() => {
     setMessage(
       <>
-        총{" "}
-        <u>
-          <b>{info.total}</b>
-        </u>
-        장의 사진 중{" "}
-        <u>
-          <b>{info.photos?.length}</b>
-        </u>
-        장의 사진이 추가 되었어요.
+        선택한 <UB>{info.total}</UB>장의 사진 중 <br />
+        <UB>{info.photos?.length}</UB>장의 사진이 성공적으로 추가 되었어요.
       </>
     );
   }, [info.photos?.length, info.total]);
@@ -122,7 +121,14 @@ const Photo = ({ info, setInfo }) => {
         {profileAlert === "FAIL" ? (
           <>
             사진 업로드에 <b>실패</b>했어요. <br />
-            {info.photos?.length ? message : "다시 시도해주세요."}
+            {info.photos?.length ? (
+              <>
+                <br />
+                {message}
+              </>
+            ) : (
+              "다시 시도해주세요."
+            )}
           </>
         ) : profileAlert === "SUCCESS" ? (
           message
