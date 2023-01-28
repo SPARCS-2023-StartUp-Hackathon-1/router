@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FlagImg from "static/assets/Flag.png";
+import { Switch } from "@material-ui/core";
 
 const Name = ({ info, setInfo }) => {
+  const [checked, setChecked] = useState(false);
+  const switchHandler = (event) => {
+    console.log(event.target.checked);
+    setChecked(event.target.checked);
+    setInfo({ ...info, progress: event.target.checked });
+  };
+
   const styleInnerGrid = {
     position: "absolute",
     columnGap: 12,
@@ -49,17 +57,8 @@ const Name = ({ info, setInfo }) => {
           style={{ margin: "2px", color: "var(--red)" }}
         >
           지금 진행 중인 여행이에요
+          <Switch checked={checked} onChange={switchHandler} />
         </div>
-        <input
-          type="checkbox"
-          id="toggle"
-          hidden
-          onChange={(e) => console.log(e)}
-        />
-
-        <label for="toggle" class="toggleSwitch">
-          <span class="toggleButton"></span>
-        </label>
       </div>
     </div>
   );
