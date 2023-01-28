@@ -46,7 +46,7 @@ def clusteringHandler(body: ClusteringBody):
         startTime = sort_body[0]["time"].date
         endTime = sort_body[-1]["time"].date
         
-        cluster =[]
+        cluster = []
         subgroup = [sort_body[0]]
         for i in range(1, len(images)):
             if 3600 < diff(sort_body[i-1].datetime, sort_body[i].datetime) and 1 < dist(sort_body[i-1].latitude, sort_body[i-1].longitude, sort_body[i].latitude, sort_body[i].longitude):
