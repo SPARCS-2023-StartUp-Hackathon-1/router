@@ -23,5 +23,5 @@
 - Serve container
 
   ```bash
-  $ docker run -itd --name api-embedding --gpus '"device=0"' -p 8080:8080 api-embedding:latest
+  $ docker run -itd --name api-embedding --gpus '"device=0"' -p 8080:8080 -e GOOGLEMAP_API_KEY=<key> api-embedding:latest
   ```
