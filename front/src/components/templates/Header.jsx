@@ -8,11 +8,13 @@ const Header = () => {
   const styleContainer = {
     width: "100%",
     height: 32,
-    paddingTop: "calc(env(safe-area-inset-top))",
     display: "flex",
     alignItems: "center",
     position: "fixed",
     zIndex: "10",
+    padding: `calc(env(safe-area-inset-top))${
+      path.startsWith("/travel") ? " 24px 0" : " 0 0"
+    }`,
   };
   const styleExcept = {
     background: "rgba(255, 255, 255, 0.75)",
