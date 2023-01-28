@@ -2,25 +2,36 @@ import React, { useState, useEffect } from "react";
 
 // import { getS3Url } from "tools/image";
 
-const PhotoBox = ({ path, width, height = 100, children }) => {
+const PhotoBox = ({ path, width, height = 100, children, href }) => {
   const styleBox = {
     width: width,
     height: height,
     borderRadius: 16,
-    backgroundColor: "var(--gray-d)",
     position: "relative",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
     padding: "0 20px 16px",
     color: "var(--white)",
-    zIndex: -2,
     cursor: "pointer",
+    zIndex: 0,
   };
   //   const getSrc = () => getS3Url(`/profile-img/${path}`);
   //   const [src, setSrc] = useState(getSrc());
   return (
-    <div style={styleBox}>
+    <a style={styleBox} href={href}>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "var(--gray-d)",
+          borderRadius: 16,
+          zIndex: -2,
+        }}
+      />
       {children}
       <img
         // src={src}
@@ -38,7 +49,7 @@ const PhotoBox = ({ path, width, height = 100, children }) => {
         }}
         alt={`/profile-img/${path}`}
       />
-    </div>
+    </a>
   );
 };
 

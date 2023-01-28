@@ -29,7 +29,7 @@ const pinSchema = Schema({
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
   mainImage: { type: Schema.Types.ObjectId, ref: "Image", required: true },
-  imageSets: [pinElementSchema], // Pinelement type 만들기
+  imageSets: [{ type: Schema.Types.ObjectId, ref: "PinElement" }], // Pinelement type 만들기
 });
 
 const imageSchema = Schema({
@@ -59,5 +59,6 @@ module.exports = {
   userModel: mongoose.model("User", userSchema),
   tripModel: mongoose.model("Trip", tripSchema),
   pinModel: mongoose.model("Pin", pinSchema),
+  pinElementModel: mongoose.model("PinElement", pinElementSchema),
   imageModel: mongoose.model("Image", imageSchema),
 };

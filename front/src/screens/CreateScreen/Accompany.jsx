@@ -1,8 +1,20 @@
 import React from "react";
+import ManImg from "static/assets/Man.png";
 
 const Accompany = () => {
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      <img
+        src={ManImg}
+        alt={"camera"}
+        style={{
+          position: "absolute",
+          top: 120,
+          left: -200,
+          width: 700,
+          zIndex: -1,
+        }}
+      />
       <div className="font-title-large">
         이번 여행의 동행자를
         <br /> 추가해 주세요.

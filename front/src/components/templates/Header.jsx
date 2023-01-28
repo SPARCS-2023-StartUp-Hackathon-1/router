@@ -14,7 +14,7 @@ const Header = () => {
   const path = useLocation().pathname;
   return (
     <div style={styleContainer}>
-      {path.startsWith("/create") ? (
+      {path.startsWith("/create") || path.startsWith("/travel") ? (
         <ArrowBackIosNewRoundedIcon
           onClick={() => navigate(-1)}
           style={{ cursor: "pointer" }}

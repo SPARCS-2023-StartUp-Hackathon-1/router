@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Header from "./Header";
 import Navigation from "./Navigation";
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "utils/axios";
 
 import { useRecoilState } from "recoil";
@@ -15,12 +15,8 @@ const BaseGrid = ({ children }) => {
     const f = async () => {
       if (loginInfo === null) {
         const loginInfoRes = await axios.get("/auth/logininfo");
-        console.log(loginInfoRes);
-        console.log(loginInfoRes.status !== 200);
-        console.log(!loginInfoRes.data?.id);
         if (loginInfoRes.status !== 200 || !loginInfoRes.data?.id)
           window.location.href = "/login";
-        console.log("asd");
         setLoginInfo(loginInfoRes.data);
       }
     };
@@ -41,8 +37,18 @@ const BaseGrid = ({ children }) => {
     paddingBottom: "calc(56px + 24px + env(safe-area-inset-bottom))",
     overflowX: "hidden",
   };
+  const styleTravel = {
+    width: "100%",
+    height: "100%",
+    maxWidth: 430,
+    margin: "auto",
+    position: "relative",
+    overflowX: "hidden",
+  };
   if (pathname.startsWith("/login"))
     return <div style={styleGrid}>{children}</div>;
+  if (pathname.startsWith("/travel"))
+    return <div style={styleTravel}>{children}</div>;
   return (
     <>
       <div style={styleGrid}>

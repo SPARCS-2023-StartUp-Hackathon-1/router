@@ -5,7 +5,7 @@ import PinImg from "static/assets/Pin.png";
 
 const CurrentTravel = () => {
   return (
-    <PhotoBox height={228}>
+    <PhotoBox height={228} href="/travel">
       <img
         src={PinImg}
         alt={"pin"}
