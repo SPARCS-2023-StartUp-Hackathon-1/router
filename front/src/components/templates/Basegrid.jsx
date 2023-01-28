@@ -37,8 +37,18 @@ const BaseGrid = ({ children }) => {
     paddingBottom: "calc(56px + 24px + env(safe-area-inset-bottom))",
     overflowX: "hidden",
   };
+  const styleTravel = {
+    width: "100%",
+    height: "100%",
+    maxWidth: 430,
+    margin: "auto",
+    position: "relative",
+    overflowX: "hidden",
+  };
   if (pathname.startsWith("/login"))
     return <div style={styleGrid}>{children}</div>;
+  if (pathname.startsWith("/travel"))
+    return <div style={styleTravel}>{children}</div>;
   return (
     <>
       <div style={styleGrid}>
