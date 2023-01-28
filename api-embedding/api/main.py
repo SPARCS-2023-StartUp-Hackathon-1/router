@@ -14,6 +14,7 @@ class ExtractBody(BaseModel):
     imageUrl: str
 
 class ImageInfo(BaseModel):
+    id: str
     time: datetime
     latitude: float
     longitude: float
