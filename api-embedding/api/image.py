@@ -21,7 +21,7 @@ def getDatetimeInfoFromStr(value):
     return datetime.strptime(value, '%Y:%m:%d %H:%M:%S')
 
 def getImageExifFromUrl(imageUrl):
-    res = requests.get(url)
+    res = requests.get(imageUrl)
     imageStream = BytesIO(res.content)
     imageInfo = exifread.process_file(imageStream)
     datetime = getDatetimeInfoFromStr(imageInfo['Image DateTime'])
