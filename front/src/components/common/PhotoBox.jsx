@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 import { getS3Url } from "tools/image";
 
 const PhotoBox = ({ path, width, height = 100, children, href }) => {
+  const navigate = useNavigate();
   const styleBox = {
     width: width,
     height: height,
@@ -20,7 +22,7 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
   const getSrc = () => getS3Url(`/image-view/${path}`);
   const [src, setSrc] = useState(getSrc());
   return (
-    <a style={styleBox} href={href}>
+    <div style={styleBox} onClick={() => navigate(href)}>
       <div
         style={{
           position: "absolute",
@@ -50,7 +52,7 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
         }}
         alt={`/${path}`}
       />
-    </a>
+    </div>
   );
 };
 
