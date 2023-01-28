@@ -15,8 +15,12 @@ const BaseGrid = ({ children }) => {
     const f = async () => {
       if (loginInfo === null) {
         const loginInfoRes = await axios.get("/auth/logininfo");
+        console.log(loginInfoRes);
+        console.log(loginInfoRes.status !== 200);
+        console.log(!loginInfoRes.data?.id);
         if (loginInfoRes.status !== 200 || !loginInfoRes.data?.id)
           window.location.href = "/login";
+        console.log("asd");
         setLoginInfo(loginInfoRes.data);
       }
     };
@@ -37,10 +41,6 @@ const BaseGrid = ({ children }) => {
     paddingBottom: "calc(56px + 24px + env(safe-area-inset-bottom))",
     overflowX: "hidden",
   };
-
-  if (!pathname.startsWith("/login") && !loginInfo) {
-    return <Navigate to="/login" replace />;
-  }
   if (pathname.startsWith("/login"))
     return <div style={styleGrid}>{children}</div>;
   return (
