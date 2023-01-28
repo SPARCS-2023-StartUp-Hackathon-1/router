@@ -1,4 +1,4 @@
-const { tripModel, pinModel } = require("../modules/mongo");
+const { tripModel, pinModel, pinElementModel } = require("../modules/mongo");
 
 const pincreateHandler = async (req, res) => {
   const { name, note, startTime, endTime } = req.body; // startTime, endTime front 에서? 아니면 가져온 사진들애소 츄츌
@@ -45,8 +45,18 @@ const pincreateHandler = async (req, res) => {
 
 const infoHandler = async (req, res) => {
   try {
-    const pin = await pinModel.findOne({ _id: req.body.pinId }).lean();
-    res.send(pin);
+    const pin = await pinModel.findOne({ _id: req.params.pinId }).lean();
+    console.log(pin);
+    const imageIds = []; // pin에 저장된 pinElement들을 front에서 구현하기 편하게 하나의 imageIds 이중리스트로 제공
+    for (const pinElemId of pin.imageSets) {
+      const pinElem = await pinElementModel.findOne({
+        _id: pinElemId,
+      });
+      imageIds.push(pinElem.images);
+    }
+    console.log(imageIds);
+    // send pin과, pin에 해당하는 클러스터 완료된 사진 ids
+    res.send({ pin, imageIds });
   } catch (err) {
     console.log(err);
     res.status(500).json({
