@@ -2,11 +2,12 @@ import cv2
 import numpy as np
 from math import radians, cos, sin, asin, sqrt
 
-def dist(lat1, long1, lat2, long2):
+def isImageCloserDist(img1, img2, diffMax=1):
     """
     Calculate the great circle distance between two points 
     on the earth (specified in decimal degrees)
     """
+    lat1, long1, lat2, long2 = img1["latitude"], img1["longitude"], img2["latitude"], img2["longitude"]
     # convert decimal degrees to radians 
     lat1, long1, lat2, long2 = map(radians, [lat1, long1, lat2, long2])
     # haversine formula 
@@ -15,12 +16,26 @@ def dist(lat1, long1, lat2, long2):
     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
     c = 2 * asin(sqrt(a)) 
     # Radius of earth in kilometers is 6371
-    km = 6371* c
-    return km
+    diff = 6371* c # km
+    return diff <= diffMax
 
-def diff(time1, time2):
-    diff = time2 - time1
-    return diff.total_seconds()
+def isImageCloserTime(img1, img2, diffMax=3600):
+    datetime1, datetime2 = img1["time"], img2["time"]
+    diff = (datetime2 - datetime1).total_seconds() # seconds
+    return diff <= diffMax
+
+def clusteringLarge(images):
+    clusters = []
+    subgroup = [images[0]]
+    for i in range(1, len(images)):
+        if isImageCloserTime(images[i-1], images[i]) or isImageCloserDist(images[i-1], images[i]):
+            subgroup.append(images[i])
+        else:
+            clusters.append(subgroup)
+            subgroup = [images[i]]
+    if len(subgroup) > 0:
+        clusters.append(subgroup)
+    return clusters
 
 def similarityImageHist(img1, img2, method="BHATTACHARYYA"):
     allMethods = ['CORREL', 'CHISQR', 'INTERSECT', 'BHATTACHARYYA', 'EMD']
@@ -74,3 +89,26 @@ def l1Distance(v1, v2):
 
 def similarity(v1, v2):
     return 1 / l1Distance(v1, v2)
+
+def clusteringDeep(images):
+    return [{ "images": [image], "vector": [0,0,0], "mainImage": image } for image in images]
+
+def imageSet2res(imageSet):
+    return {
+        "mainImage": imageSet["mainImage"]["id"],
+        "vector": imageSet["vector"],
+        "images": [image["id"] for image in imageSet["images"]]
+    }
+
+def clusters2res(clusters):
+    res = []
+    for cluster in clusters:
+        imageSets = [imageSet2res(imageSet) for imageSet in cluster]
+        res.append({
+            "name": "", # FIXME
+            "startTime": cluster[0]["images"][0]["time"],
+            "endTime": cluster[-1]["images"][-1]["time"],
+            "mainImage": cluster[0]["mainImage"]["id"],
+            "imageSets": imageSets,
+        })
+    return res
