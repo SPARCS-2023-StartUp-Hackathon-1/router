@@ -54,6 +54,9 @@ const createHandler = async (req, res) => {
         let pin = new pinModel({
           name: cluster["name"],
           note: "",
+          location: cluster["location"],
+          latitude: cluster["latitude"],
+          longitude: cluster["longitude"],
           startTime: cluster["startTime"],
           endTime: cluster["endTime"],
           mainImage: cluster["mainImage"],
@@ -88,25 +91,51 @@ const createHandler = async (req, res) => {
   }
 };
 
-// createHandler(
-//   {
-//     body: {
-//       name: "hi",
-//       progress: true,
-//       userId: "63d50982b9091985974c36eb",
-//       imageIds: ["63d542b89badf76614652a29"],
-//     },
-//   },
-//   {
-//     json: console.log,
-//     send: console.log,
-//   }
-// );
+createHandler(
+  {
+    body: {
+      name: "신나는 여행여행",
+      progress: true,
+      userId: "63d50982b9091985974c36eb",
+      imageIds: [
+        "63d55413eaf96238f0251208",
+        "63d55419eaf96238f025120d",
+        "63d5541deaf96238f0251212",
+        "63d55422eaf96238f0251217",
+        "63d55427eaf96238f025121c",
+        "63d5542deaf96238f0251221",
+        "63d55432eaf96238f0251226",
+        "63d55437eaf96238f025122b",
+        "63d5543ceaf96238f0251230",
+      ],
+    },
+  },
+  {
+    json: console.log,
+    send: console.log,
+  }
+);
 
 const pinlistHandler = async (req, res) => {
   try {
-    const user = await userModel.findOne({ id: req.userId }).populate("pins");
-    res.send(user.pins);
+    const trip = await tripModel.findOne({ _id: req.body.tripId });
+    // .populate("pins");
+
+    // get only pins _id, latitudem logitude
+    const pinlist = [];
+    for (const pinId of trip.pins) {
+      console.log(pinId);
+
+      const pin = await pinModel.findOne({ _id: pinId });
+      console.log(pin["longitude"]);
+      pinlist.push({
+        _id: pinId,
+        latitude: pin["latitude"],
+        longitude: pin["longitude"],
+      });
+    }
+    console.log(pinlist);
+    res.send(pinlist);
   } catch (err) {
     console.log(err);
     res.status(500).json({
