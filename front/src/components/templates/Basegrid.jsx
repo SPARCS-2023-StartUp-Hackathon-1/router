@@ -15,6 +15,7 @@ const BaseGrid = ({ children }) => {
     // height: "calc(100% - env(safe-area-inset-bottom))",
     // paddingTop: "env(safe-area-inset-top)",
     paddingBottom: "calc(56px + env(safe-area-inset-bottom))",
+    overflowX: "hidden",
   };
   if (useLocation().pathname.startsWith("/login"))
     return <div style={styleGrid}>{children}</div>;

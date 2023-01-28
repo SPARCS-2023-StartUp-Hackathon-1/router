@@ -10,8 +10,22 @@ body {
   --white: #fff;
   --red: #de552a;
   --light-red: #ef9f95;
-  --gradient-red: 90deg, #de552a 0%, #efaa95 100%;
-  /* linear-gradient(var(--gradient-red)) */
+  --gray-f3: #f3f3f3;
+  --gray-e: #eee;
+  --gray-d: #ddd;
+  --gray-c: #ccc;
+  --gray-9: #999;
+  --gradient-red: 90deg, #de552a 0%, #efaa95 100%; /* linear-gradient(var(--gradient-red)) */
+  /* touch-action: pan-y; */
+}
+
+body::-webkit-scrollbar,
+div::-webkit-scrollbar {
+  display: none;
+}
+
+b {
+  font-weight: 700 !important;
 }
 
 .font-logo-small {
@@ -36,7 +50,7 @@ body {
   font-size: 12px;
   font-weight: 400;
 }
-.font-text {
+.font-text-large {
   font-size: 16px;
   font-weight: 400;
 }
