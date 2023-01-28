@@ -14,3 +14,7 @@ def dist(lat1, long1, lat2, long2):
     # Radius of earth in kilometers is 6371
     km = 6371* c
     return km
+
+def diff(time1, time2):
+    diff = time2 - time1
+    return diff.total_seconds()
