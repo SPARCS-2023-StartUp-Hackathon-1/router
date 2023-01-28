@@ -8,6 +8,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 const Navigation = () => {
+  const location = useLocation();
   const styleContainer = {
     position: "fixed",
     left: "0px",
@@ -22,6 +23,7 @@ const Navigation = () => {
     display: "flex",
     height: "56px",
   };
+  if (location.pathname.startsWith("/create")) return <></>;
   return (
     <div style={styleContainer}>
       <div style={styleNavigation}>
