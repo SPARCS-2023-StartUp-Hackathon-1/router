@@ -13,3 +13,15 @@
   ```bash
   $ cd download_huggingface_model && python3 downloadAndSave.py
   ```
+
+- build Image 
+
+  ```bash
+  $ docker build -t api-embedding:latest .
+  ```
+
+- Serve container
+
+  ```bash
+  $ docker run -itd --name api-embedding --gpus '"device=0"' -p 8080:8080 api-embedding:latest
+  ```

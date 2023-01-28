@@ -1,8 +1,9 @@
 # from PIL import Image
 # from PIL.ExifTags import TAGS
 import exifread
+import requests
 from datetime import datetime
-# import requests
+from io import BytesIO
 
 def getGPSInfoFromStr(ref, value):
     ref, value = str(ref), str(value)
@@ -20,9 +21,9 @@ def getDatetimeInfoFromStr(value):
     return datetime.strptime(value, '%Y:%m:%d %H:%M:%S')
 
 def getImageExifFromUrl(imageUrl):
-    # TODO: Download image from imageUrl
-    image = open("mandoo1.HEIC", 'rb')
-    imageInfo = exifread.process_file(image)
+    res = requests.get(url)
+    imageStream = BytesIO(res.content)
+    imageInfo = exifread.process_file(imageStream)
     datetime = getDatetimeInfoFromStr(imageInfo['Image DateTime'])
     latitude = getGPSInfoFromStr(imageInfo['GPS GPSLatitudeRef'], imageInfo['GPS GPSLatitude'])
     longitude = getGPSInfoFromStr(imageInfo['GPS GPSLongitudeRef'], imageInfo['GPS GPSLongitude'])
