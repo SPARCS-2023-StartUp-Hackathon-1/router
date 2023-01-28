@@ -138,7 +138,7 @@ const TravelScreen = () => {
                       cursor: "pointer",
                     }}
                     onClick={() => setSelectedId(pin._id)}
-                  />
+                  >
                     <img
                       src={getS3Url(`/image-view/${pin.mainImage}`)}
                       style={{
