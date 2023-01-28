@@ -128,11 +128,13 @@ const pinlistHandler = async (req, res) => {
       console.log(pinId);
 
       const pin = await pinModel.findOne({ _id: pinId });
-      console.log(pin["longitude"]);
+      // console.log(pin["longitude"]);
+
       pinlist.push({
         _id: pinId,
         latitude: pin["latitude"],
         longitude: pin["longitude"],
+        mainImage: pin["mainImage"],
       });
     }
     console.log(pinlist);

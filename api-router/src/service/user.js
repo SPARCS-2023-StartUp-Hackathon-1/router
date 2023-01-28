@@ -4,7 +4,7 @@ const triplistHandler = async (req, res) => {
   try {
     console.log(req.body.userId);
     const user = await userModel
-      .findOne({ _id: req.body.userId })
+      .findOne({ id: req.body.userId })
       .populate("trips");
     res.send(user.trips);
   } catch (err) {
