@@ -4,6 +4,7 @@ import Button from "components/common/Button";
 import axios from "utils/axios";
 import axiosOri from "axios";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import CameraImg from "static/assets/Camera.png";
 
 const UB = ({ children }) => (
   <u>
@@ -117,8 +118,23 @@ const Photo = ({ info, setInfo }) => {
       </div>
       <div
         className="font-text-large"
-        style={{ margin: "20px 0 auto", color: "var(--red)" }}
+        style={{
+          margin: "20px 0 auto",
+          color: "var(--red)",
+          position: "relative",
+        }}
       >
+        <img
+          src={CameraImg}
+          alt={"camera"}
+          style={{
+            position: "absolute",
+            top: 12,
+            left: 0,
+            width: 450,
+            zIndex: -1,
+          }}
+        />
         {profileAlert === "FAIL" ? (
           <>
             사진 업로드에 <b>실패</b>했어요. <br />
