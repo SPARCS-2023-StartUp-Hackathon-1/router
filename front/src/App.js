@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 import BaseGrid from "components/templates/Basegrid";
 
 import HomeScreen from "screens/HomeScreen";
@@ -12,19 +13,21 @@ import TravelScreen from "screens/TravelScreen";
 
 import "./App.css";
 
-function App() {
+const App = () => {
   return (
-    <Router>
-      <BaseGrid>
-        <Routes>
-          <Route path="*" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={<HomeScreen />} />
-          <Route path="/login" element={<LoginScreen />} />
-          <Route path="/travel" element={<TravelScreen />} />
-        </Routes>
-      </BaseGrid>
-    </Router>
+    <RecoilRoot>
+      <Router>
+        <BaseGrid>
+          <Routes>
+            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/home" element={<HomeScreen />} />
+            <Route path="/login" element={<LoginScreen />} />
+            <Route path="/travel" element={<TravelScreen />} />
+          </Routes>
+        </BaseGrid>
+      </Router>
+    </RecoilRoot>
   );
-}
+};
 
 export default App;

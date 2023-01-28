@@ -1,9 +1,17 @@
 import React from "react";
 import Header from "./Header";
 import Navigation from "./Navigation";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
+
+import { useRecoilValue } from "recoil";
+import loginInfoAtom from "recoil/logininfo/atom";
 
 const BaseGrid = ({ children }) => {
+  const location = useLocation();
+  const pathname = location.pathname;
+  const loginInfo = useRecoilValue(loginInfoAtom);
+  console.log(loginInfo);
+
   const styleGrid = {
     width: "100%",
     height: "100%",
@@ -17,7 +25,11 @@ const BaseGrid = ({ children }) => {
     paddingBottom: "calc(56px + 24px + env(safe-area-inset-bottom))",
     overflowX: "hidden",
   };
-  if (useLocation().pathname.startsWith("/login"))
+
+  if (!pathname.startsWith("/login") && !loginInfo) {
+    return <Navigate to="/login" replace />;
+  }
+  if (pathname.startsWith("/login"))
     return <div style={styleGrid}>{children}</div>;
   return (
     <>
