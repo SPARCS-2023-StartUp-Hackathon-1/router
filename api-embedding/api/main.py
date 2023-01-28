@@ -37,7 +37,10 @@ def extractHandler(body: ExtractBody):
 @app.post("/clustering")
 def clusteringHandler(body: [clusteringBody]):
     try:
-        sort_body = body.sorted(key=lambda x: x[0]) # sort by date
+        images = body.images
+        sort_body = images.sorted(key=lambda x: x[0]) # sort by date
+        startTime = sort_body[0].time.date
+        endTime = sort_body[-1].time.date
         
         cluster =[]
         subgroup = [sort_body[0]]
@@ -48,7 +51,9 @@ def clusteringHandler(body: [clusteringBody]):
             else:
                 subgroup.append(sort_body[i])
         return {
-            "cluster" : cluster
+            "cluster" : cluster,
+            "startTime" : startTime,
+            "endTime": endTime,
         }
     except Exception as e:
         print(e)
