@@ -45,8 +45,8 @@ const pincreateHandler = async (req, res) => {
 
 const infoHandler = async (req, res) => {
   try {
-    const pinObject = await pinModel.findOne({ _id: req.pindId }).lean();
-    res.send(pinObject);
+    const pin = await pinModel.findOne({ _id: req.body.pinId }).lean();
+    res.send(pin);
   } catch (err) {
     console.log(err);
     res.status(500).json({
