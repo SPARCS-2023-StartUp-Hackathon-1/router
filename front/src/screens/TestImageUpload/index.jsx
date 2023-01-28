@@ -13,37 +13,42 @@ const BtnProfImg = (props) => {
   }, [profileAlert]);
 
   const handleUploadProfileImage = async () => {
-    setProfileAlert("LOADING");
-    try {
-      const image = inputImage.current?.files?.[0];
-      // const image = await convertImg(inputImage.current?.files?.[0]);
-      if (!image) return;
-      const { data } = await axios.post("/image/upload/getPUrl", {
-        type: image.type,
-      });
-      if (data.url && data.fields) {
-        const formData = new FormData();
-        for (const key in data.fields) {
-          formData.append(key, data.fields[key]);
-        }
-        formData.append("file", image);
-        const res = await axiosOri.post(data.url, formData);
-        if (res.status === 204) {
+    // setProfileAlert("LOADING");
+    const images = inputImage.current?.files;
+    const imageUploadSuccessList = [];
+    const imageUploadFailList = [];
+
+    for (const image of images) {
+      try {
+        if (!image) return;
+        const { data } = await axios.post("/image/upload/getPUrl", {
+          type: image.type,
+        });
+        try {
+          if (!data.url || !data.fields) throw new Error("Upload image fail");
+          const formData = new FormData();
+          for (const key in data.fields) {
+            formData.append(key, data.fields[key]);
+          }
+          formData.append("file", image);
+          const res = await axiosOri.post(data.url, formData);
+          if (res.status !== 204) throw new Error("Upload image fail");
           const imageId = data.id;
           const res2 = await axios.post("/image/upload/complete", {
             id: imageId,
           });
-          if (res2?.data?.result) {
-            setProfileAlert("SUCCESS");
-            return;
-          }
+          if (!res2?.data?.result) throw new Error("Upload image fail");
+          // 사진 하나 업로드 성공
+          imageUploadSuccessList.push(data.id);
+        } catch (e) {
+          // 사진 하나 업로드 실패
+          imageUploadFailList.push(data.id);
         }
+      } catch (e) {
+        console.error(e);
       }
-      // FIXME: 실패 경우
-      setProfileAlert("FAIL");
-    } catch (e) {
-      // FIXME: 실패 경우
     }
+    console.log(imageUploadSuccessList, imageUploadFailList);
   };
   const style = {
     textAlign: "center",
@@ -73,6 +78,7 @@ const BtnProfImg = (props) => {
         hidden
         onChange={handleUploadProfileImage}
         ref={inputImage}
+        multiple
       />
       {profileAlert === "SUCCESS"
         ? "사진이 업로드 완료"
