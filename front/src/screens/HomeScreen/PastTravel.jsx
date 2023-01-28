@@ -4,7 +4,10 @@ import axios from "utils/axios";
 import PhotoBox from "components/common/PhotoBox";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import loginInfoAtom from "recoil/logininfo/atom";
-import { useRecoilValue } from "recoil";
+import {
+  useRecoilState_TRANSITION_SUPPORT_UNSTABLE,
+  useRecoilValue,
+} from "recoil";
 import GrayBox from "components/common/GrayBox";
 
 const PastTravel = () => {
@@ -14,8 +17,16 @@ const PastTravel = () => {
   useEffect(() => {
     const f = async () => {
       const response = await axios.get(`/user/triplist/${loginInfo.id}`);
-      console.log(response);
-      if (response.status === 200) setTrips(response.data);
+      if (response.status === 200) {
+        const pastTrips = [];
+        for (const trip of response.data) {
+          if (trip.progress == false) {
+            pastTrips.push(trip);
+          }
+        }
+        console.log(pastTrips.length);
+        setTrips(pastTrips);
+      }
     };
     if (loginInfo?.id) f();
   }, [loginInfo]);

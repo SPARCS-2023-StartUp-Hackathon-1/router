@@ -122,7 +122,7 @@ const Photo = ({ info, setInfo }) => {
   const onClickNext = async () => {
     const response = await axios.post("/trip/create", {
       name: info.name,
-      progress: false,
+      progress: info.progress,
       imageIds: info.photos,
       userId: loginInfo.id,
     });
