@@ -17,6 +17,7 @@ const Photo = ({ info, setInfo }) => {
   const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
   useEffect(() => {
+    setDisabled(!info.photos?.length);
     setMessage(
       <>
         선택한 <UB>{info.total}</UB>장의 사진 중 <br />
@@ -24,11 +25,6 @@ const Photo = ({ info, setInfo }) => {
       </>
     );
   }, [info.photos?.length, info.total]);
-  // useEffect(() => {
-  //   if (profileAlert === "LOADING") return;
-  //   const timeoutID = setTimeout(() => setProfileAlert(null), 1500);
-  //   return () => clearTimeout(timeoutID);
-  // }, [profileAlert]);
 
   const handleUploadProfileImage = async () => {
     setProfileAlert("LOADING");
@@ -71,10 +67,7 @@ const Photo = ({ info, setInfo }) => {
       photos: (info.photos ?? []).concat(imageUploadSuccessList),
     });
     if (!imageUploadSuccessList.length) setProfileAlert("FAIL");
-    else {
-      setDisabled(!info.photos?.length);
-      setProfileAlert("SUCCESS");
-    }
+    else setProfileAlert("SUCCESS");
     console.log(imageUploadSuccessList, imageUploadFailList);
   };
   const style = {
@@ -102,10 +95,18 @@ const Photo = ({ info, setInfo }) => {
         : "pointer",
     height: 60,
   };
-  const onClick = () => {
+  const onClickAdd = () => {
     if (profileAlert !== "LOADING") {
       inputImage.current.click();
     }
+  };
+
+  const onClickNext = async () => {
+    const response = await axios.post("/trip/create", {
+      name: info.name,
+      progress: false,
+      imageIds: info.photos,
+    });
   };
   return (
     <>
@@ -155,7 +156,7 @@ const Photo = ({ info, setInfo }) => {
           radius={30}
           style={style}
           disabled={profileAlert === "LOADING"}
-          onClick={onClick}
+          onClick={onClickAdd}
         >
           <input
             type="file"
@@ -180,7 +181,7 @@ const Photo = ({ info, setInfo }) => {
           radius={30}
           style={checkStyle}
           disabled={disabled}
-          // onClick={()=>navigate()}
+          onClick={onClickNext}
         >
           <CheckRoundedIcon fontSize="medium" />
         </Button>
