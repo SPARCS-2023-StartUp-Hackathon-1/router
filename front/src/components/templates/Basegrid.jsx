@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import Navigation from "./Navigation";
 import { useLocation, Navigate } from "react-router-dom";
+import axios from "utils/axios";
 
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import loginInfoAtom from "recoil/logininfo/atom";
 
 const BaseGrid = ({ children }) => {
   const location = useLocation();
   const pathname = location.pathname;
-  const loginInfo = useRecoilValue(loginInfoAtom);
-  console.log(loginInfo);
+  const [loginInfo, setLoginInfo] = useRecoilState(loginInfoAtom);
+
+  useEffect(() => {
+    const f = async () => {
+      if (loginInfo === null) {
+        const loginInfoRes = await axios.get("/auth/logininfo");
+        if (loginInfoRes.status !== 200) return;
+        if (!loginInfoRes.data?.id) setLoginInfo(undefined);
+        setLoginInfo(loginInfoRes.data);
+      }
+    };
+    f();
+  }, [loginInfo]);
 
   const styleGrid = {
     width: "100%",
@@ -26,6 +38,7 @@ const BaseGrid = ({ children }) => {
     overflowX: "hidden",
   };
 
+  if (loginInfo === null) return null;
   if (!pathname.startsWith("/login") && !loginInfo) {
     return <Navigate to="/login" replace />;
   }
