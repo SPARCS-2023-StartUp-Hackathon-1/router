@@ -7,6 +7,7 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import CameraImg from "static/assets/Camera.png";
 import loginInfoAtom from "recoil/logininfo/atom";
 import { useRecoilValue } from "recoil";
+import convertImg from "./convertImg";
 
 const UB = ({ children }) => (
   <u>
@@ -50,10 +51,23 @@ const Photo = ({ info, setInfo }) => {
           formData.append("file", image);
           const res = await axiosOri.post(data.url, formData);
           if (res.status !== 204) throw new Error("Upload image fail");
+
+          const imageAfter = await convertImg(image);
+          if (!imageAfter) throw new Error("Upload image fail");
+          if (!data.urlV || !data.fieldsV) throw new Error("Upload image fail");
+          const formDataV = new FormData();
+          for (const key in data.fieldsV) {
+            formDataV.append(key, data.fieldsV[key]);
+          }
+          formDataV.append("file", imageAfter);
+          const res3 = await axiosOri.post(data.urlV, formDataV);
+          if (res3.status !== 204) throw new Error("Upload image fail");
+
           const imageId = data.id;
           const res2 = await axios.post("/image/upload/complete", {
             id: imageId,
           });
+
           if (!res2?.data?.result) throw new Error("Upload image fail");
           // 사진 하나 업로드 성공
           imageUploadSuccessList.push(data.id);
