@@ -27,7 +27,7 @@ const Navigation = () => {
       <div style={styleNavigation}>
         <NavigationMenu text="홈" page="/home" />
         <NavigationMenu text="지난 여행" page="/travel" />
-        <NavigationMenu text="여행 추가" page="/add" />
+        <NavigationMenu text="여행 추가" page="/create" />
         <NavigationMenu text="프로필 " page="/profile" />
       </div>
     </div>
@@ -63,7 +63,7 @@ const NavigationMenu = ({ text, page }) => {
         return <HomeRoundedIcon style={styleIcon} />;
       case "/travel":
         return <FlightLandRoundedIcon style={styleIcon} />;
-      case "/add":
+      case "/create":
         return <AddRoundedIcon style={styleIcon} />;
       case "/profile":
         return <AccountCircleRoundedIcon style={styleIcon} />;
