@@ -21,6 +21,11 @@ input {
   border-top: none;
   border-left: none;
   border-right: none;
+  border-radius: 0;
+}
+
+input::placeholder {
+  color: var(--light-red);
 }
 
 input:focus-visible {

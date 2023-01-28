@@ -13,7 +13,7 @@ const Navigation = () => {
     left: "0px",
     bottom: "0px",
     width: "100%",
-    height: "calc(56px + env(safe-area-inset-bottom))",
+    height: "calc(56px + max(env(safe-area-inset-bottom), 12px))",
     backgroundColor: "var(--red)",
   };
   const styleNavigation = {
@@ -25,7 +25,7 @@ const Navigation = () => {
   return (
     <div style={styleContainer}>
       <div style={styleNavigation}>
-        <NavigationMenu text="홈" page="/" />
+        <NavigationMenu text="홈" page="/home" />
         <NavigationMenu text="지난 여행" page="/travel" />
         <NavigationMenu text="여행 추가" page="/add" />
         <NavigationMenu text="프로필 " page="/profile" />
@@ -59,7 +59,7 @@ const NavigationMenu = ({ text, page }) => {
 
   const getIcon = (page) => {
     switch (page) {
-      case "/":
+      case "/home":
         return <HomeRoundedIcon style={styleIcon} />;
       case "/travel":
         return <FlightLandRoundedIcon style={styleIcon} />;

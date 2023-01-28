@@ -19,7 +19,7 @@ const PastTravel = () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          margin: "12px 0",
+          marginTop: "12px",
           rowGap: 12,
         }}
       >
