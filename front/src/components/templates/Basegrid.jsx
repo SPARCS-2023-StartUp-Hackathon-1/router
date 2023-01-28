@@ -43,7 +43,6 @@ const BaseGrid = ({ children }) => {
     maxWidth: 430,
     margin: "auto",
     position: "relative",
-    overflowX: "hidden",
   };
   if (pathname.startsWith("/login"))
     return <div style={styleGrid}>{children}</div>;

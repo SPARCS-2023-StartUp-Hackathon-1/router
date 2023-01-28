@@ -15,6 +15,7 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
     color: "var(--white)",
     cursor: "pointer",
     zIndex: 0,
+    textDecoration: "none",
   };
   //   const getSrc = () => getS3Url(`/profile-img/${path}`);
   //   const [src, setSrc] = useState(getSrc());

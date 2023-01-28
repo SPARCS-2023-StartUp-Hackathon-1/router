@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+
+import "./index.css";
 
 const containerStyle = {
   position: "fixed",
@@ -7,6 +9,7 @@ const containerStyle = {
   left: 0,
   width: "100%",
   height: "100%",
+  color: "red",
 };
 
 const center = {
@@ -29,7 +32,10 @@ const positions = [
   },
 ];
 
-function MyComponent() {
+const TravelScreen = () => {
+  useEffect(() => {
+    document.getElementById("root").style.height = "calc(100dvh + 1px)";
+  }, []);
   return (
     <LoadScript googleMapsApiKey="AIzaSyB89A46XhoFozfegjbh7gnPzh9FiSQwRbo">
       <GoogleMap
@@ -48,6 +54,6 @@ function MyComponent() {
       </GoogleMap>
     </LoadScript>
   );
-}
+};
 
-export default React.memo(MyComponent);
+export default React.memo(TravelScreen);
