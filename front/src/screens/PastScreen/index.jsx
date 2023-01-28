@@ -37,7 +37,7 @@ const PastScreen = () => {
       >
         <div className="font-title-large">지난 여행</div>
         <div style={{ margin: "8px 0 24px", color: "var(--red)" }}>
-          총 <b style={{ textDecoration: "underline" }}>8</b>
+          총 <b style={{ textDecoration: "underline" }}>{trips.length ?? 0}</b>
           건의 여행이 있어요
         </div>
         <input
