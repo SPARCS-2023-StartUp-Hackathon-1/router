@@ -15,10 +15,12 @@ body {
 }
 
 .font-logo-small {
+  color: var(--red);
   font-size: 24px;
   font-weight: 900;
 }
 .font-logo-large {
+  color: var(--red);
   font-size: 48px;
   font-weight: 900;
 }

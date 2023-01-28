@@ -15,11 +15,11 @@ const Input = () => {
   return (
     <div style={styleInputGrid}>
       <div style={styleInput}>
-        <div className="font-subtitle">아이디</div>
+        <div className="font-subtitle-small">아이디</div>
         <input className="font-text"></input>
       </div>
       <div style={styleInput}>
-        <div className="font-subtitle">비밀번호</div>
+        <div className="font-subtitle-small">비밀번호</div>
         <input type="password" className="font-text"></input>
       </div>
     </div>
