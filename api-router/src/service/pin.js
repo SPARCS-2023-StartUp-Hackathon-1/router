@@ -43,6 +43,19 @@ const pincreateHandler = async (req, res) => {
   }
 };
 
+const infoHandler = async (req, res) => {
+  try {
+    const pinObject = await pinModel.findOne({ _id: req.pindId }).lean();
+    res.send(pinObject);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: "pins/info : internal server error",
+    });
+  }
+};
+
 module.exports = {
   pincreateHandler,
+  infoHandler,
 };
