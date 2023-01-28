@@ -1,2 +1,4 @@
 __pycache__
 openjdk-16.0.2_linux-x64_bin.tar.gz
+download_huggingface_model/model
+download_huggingface_model/processor

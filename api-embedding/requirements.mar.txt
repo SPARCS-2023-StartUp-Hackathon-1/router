@@ -1,2 +1,3 @@
 transformers==4.25.1
 requests
+pillow-heif==0.9.3
