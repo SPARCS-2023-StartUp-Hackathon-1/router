@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "utils/axios";
 import { useParams } from "react-router-dom";
-import { GoogleMap, LoadScript, InfoWindow } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  InfoWindow,
+  Polyline,
+} from "@react-google-maps/api";
 import GrayBox from "components/common/GrayBox";
 import "./google_map.css";
 
@@ -19,23 +24,10 @@ const center = {
   lng: 126.8876,
 };
 
-const positions = [
-  {
-    lat: 37.5205,
-    lng: 126.8876,
-  },
-  {
-    lat: 37.5205,
-    lng: 126.8976,
-  },
-  {
-    lat: 37.5155,
-    lng: 126.8926,
-  },
-];
 const TravelScreen = () => {
   const { tripId } = useParams();
   const [pinList, setPinList] = useState([]);
+  const [path, setPath] = useState([]);
   useEffect(() => {
     document.getElementById("root").style.height = "calc(100dvh + 1px)";
     const f = async () => {
@@ -44,12 +36,29 @@ const TravelScreen = () => {
           tripId: tripId,
         },
       });
-      console.log(response);
-      if (response.status === 200) setPinList(response.data);
+      if (response.status === 200) {
+        setPinList(response.data);
+        const newPath = response.data.map((pin) => ({
+          lat: pin.latitude,
+          lng: pin.longitude,
+        }));
+        setPath(newPath);
+      }
     };
     if (tripId) f();
   }, [tripId]);
-  console.log(pinList);
+
+  const options = {
+    strokeColor: "#DE552A",
+    strokeOpacity: 1,
+    strokeWeight: 3,
+    clickable: false,
+    draggable: false,
+    editable: false,
+    visible: true,
+    radius: 5,
+    zIndex: 5,
+  };
   return (
     <>
       <GrayBox
@@ -59,7 +68,7 @@ const TravelScreen = () => {
         radius={16}
         style={{
           position: "fixed",
-          top: 44,
+          top: 92,
           left: "50%",
           zIndex: 10,
           transform: "translate(-50%, 0)",
@@ -82,13 +91,6 @@ const TravelScreen = () => {
           zoom={10}
         >
           {/* Child components, such as markers, info windows, etc. */}
-          {/* <Marker
-          icon={
-            "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-          }
-          position={positions[0]}
-        /> */}
-          {/* <Circle center={center} options={options} /> */}
           {pinList.length &&
             pinList.map((pin) => (
               <InfoWindow
@@ -107,64 +109,14 @@ const TravelScreen = () => {
                     alignItems: "center",
                     border: "solid 4px var(--white)",
                     boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.3)",
-                    margin: "12px",
+                    margin: "-4px",
+                    padding: 4,
                     cursor: "pointer",
                   }}
                 />
               </InfoWindow>
             ))}
-          {/* <InfoWindow position={positions[2]}>
-            <div
-              style={{
-                position: "absolute",
-                height: 60,
-                width: 60,
-                borderRadius: "50%",
-                backgroundColor: "var(--gray-c)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: "solid 4px var(--white)",
-                boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.3)",
-                margin: "12px",
-                cursor: "pointer",
-              }}
-            />
-          </InfoWindow>
-          <InfoWindow position={positions[1]}>
-            <div
-              style={{
-                height: 60,
-                width: 60,
-                borderRadius: "50%",
-                backgroundColor: "var(--gray-c)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: "solid 4px var(--white)",
-                boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.3)",
-                margin: "12px",
-                cursor: "pointer",
-              }}
-            />
-          </InfoWindow>
-          <InfoWindow position={positions[0]}>
-            <div
-              style={{
-                height: 60,
-                width: 60,
-                borderRadius: "50%",
-                backgroundColor: "var(--gray-c)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: "solid 4px var(--white)",
-                boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.3)",
-                margin: "12px",
-                cursor: "pointer",
-              }}
-            />
-          </InfoWindow> */}
+          {path?.length && <Polyline path={path} options={options} />}
         </GoogleMap>
       </LoadScript>
     </>

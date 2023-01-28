@@ -19,7 +19,6 @@ const PhotoBox = ({ path, width, height = 100, children, href }) => {
   };
   const getSrc = () => getS3Url(`/image-ori/${path}`);
   const [src, setSrc] = useState(getSrc());
-  console.log(src);
   return (
     <a style={styleBox} href={href}>
       <div

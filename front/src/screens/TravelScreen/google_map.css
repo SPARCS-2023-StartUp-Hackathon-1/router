@@ -12,6 +12,9 @@
 button[title|="Close"] {
   display: none !important;
 }
+button[title|="닫기"] {
+  display: none !important;
+}
 
 .gm-style .gm-style-iw-tc {
   display: none;
