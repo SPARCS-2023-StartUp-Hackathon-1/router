@@ -1,7 +1,7 @@
 import React from "react";
 import PhotoBox from "components/common/PhotoBox";
 
-const TravelScreen = () => {
+const PastScreen = () => {
   return (
     <div style={{ paddingTop: 30 }}>
       <div className="font-title-large">지난 여행</div>
@@ -26,4 +26,4 @@ const TravelScreen = () => {
   );
 };
 
-export default TravelScreen;
+export default PastScreen;
