@@ -20,6 +20,7 @@ const Photo = ({ info, setInfo }) => {
   const [profileAlert, setProfileAlert] = useState(null);
   const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const navigate = useNavigate();
   const loginInfo = useRecoilValue(loginInfoAtom);
   useEffect(() => {
     setDisabled(!info.photos?.length);
@@ -30,7 +31,6 @@ const Photo = ({ info, setInfo }) => {
       </>
     );
   }, [info.photos?.length, info.total]);
-
   const handleUploadProfileImage = async () => {
     setProfileAlert("LOADING");
     const images = inputImage.current?.files;
@@ -71,9 +71,11 @@ const Photo = ({ info, setInfo }) => {
           if (!res2?.data?.result) throw new Error("Upload image fail");
           // 사진 하나 업로드 성공
           imageUploadSuccessList.push(data.id);
+          console.log("success");
         } catch (e) {
           // 사진 하나 업로드 실패
           imageUploadFailList.push(data.id);
+          console.log("fail");
         }
       } catch (e) {
         console.error(e);
@@ -126,7 +128,10 @@ const Photo = ({ info, setInfo }) => {
       imageIds: info.photos,
       userId: loginInfo.id,
     });
-    console.log(response);
+    if (response.status === 200) {
+      console.log(response);
+      navigate("/travel/" + response.data);
+    }
   };
   return (
     <>

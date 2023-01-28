@@ -14,7 +14,7 @@ const HomeScreen = () => {
   return (
     <div style={{ marginTop: 110 }}>
       <div className="font-subtitle-small" style={styleTitle}>
-        안녕하세요, <b>{loginInfo.id ?? "사용자"}</b> 님!
+        안녕하세요, <b>{loginInfo?.id ?? "사용자"}</b> 님!
         <br />
         이번 여행은 어떻게 보내고 계신가요?
       </div>

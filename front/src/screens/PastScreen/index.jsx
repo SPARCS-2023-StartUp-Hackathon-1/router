@@ -22,17 +22,18 @@ const PastScreen = () => {
       trip.name.includes(search)
     );
   });
-  console.log(searchedTrips);
   return (
     <div style={{ position: "relative", marginTop: 110 - 32 }}>
       <div
         style={{
           position: "fixed",
-          paddingTop: 32,
+          top: 32,
+          paddingTop: 32 + 46,
           width: "calc(100% - 48px)",
           background: "rgba(255, 255, 255, 0.75)",
           WebkitBackdropFilter: "blur(20px)",
           BackdropFilter: "blur(20px)",
+          zIndex: 1,
         }}
       >
         <div className="font-title-large">지난 여행</div>
