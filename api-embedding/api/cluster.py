@@ -91,7 +91,18 @@ def similarity(v1, v2):
     return 1 / l1Distance(v1, v2)
 
 def clusteringDeep(images):
-    return [{ "images": [image], "vector": [0,0,0], "mainImage": image } for image in images]
+    clusters = [[image] for image in images] # fixme
+
+    result = []
+    for cluster in clusters:
+        vectors = [np.asarray(image["vector"]) for image in cluster]
+        globalVector = maxpooling(vectors)
+        result.append({
+            "images": cluster,
+            "vector": globalVector.tolist(),
+            "mainImage": cluster[0] # fixme
+        })
+    return [{ "images": cluster, "vector": [0,0,0], "mainImage": cluster[0] } for cluster in clusters]
 
 def latlongMedian(images):
     latitudes = [image["latitude"] for image in images]
