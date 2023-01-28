@@ -11,6 +11,7 @@
   endTime : String, // 도착지 시간 string 으로
   progress : Boolean, // 진행중인 여행 : true, 아니면 false
   pins : image[],  // front에서는 사용자 선택한 사진들을 pins list에 보내서 요청
+}
 ```
 
 ### `/pinlist` **(GET)**

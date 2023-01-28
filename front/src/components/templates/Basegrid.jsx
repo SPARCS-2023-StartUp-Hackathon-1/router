@@ -21,7 +21,7 @@ const BaseGrid = ({ children }) => {
     boxSizing: "border-box",
     // height: "calc(100% - env(safe-area-inset-bottom))",
     // paddingTop: "env(safe-area-inset-top)",
-    paddingBottom: "calc(56px + env(safe-area-inset-bottom))",
+    paddingBottom: "calc(56px + 24px + env(safe-area-inset-bottom))",
     overflowX: "hidden",
   };
 

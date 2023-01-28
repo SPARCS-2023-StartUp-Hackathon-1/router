@@ -6,8 +6,11 @@ import {
 } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import BaseGrid from "components/templates/Basegrid";
+
 import HomeScreen from "screens/HomeScreen";
 import LoginScreen from "screens/LoginScreen";
+import TravelScreen from "screens/TravelScreen";
+
 import "./App.css";
 
 const App = () => {
@@ -17,8 +20,9 @@ const App = () => {
         <BaseGrid>
           <Routes>
             <Route path="*" element={<Navigate to="/" replace />} />
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/home" element={<HomeScreen />} />
             <Route path="/login" element={<LoginScreen />} />
+            <Route path="/travel" element={<TravelScreen />} />
           </Routes>
         </BaseGrid>
       </Router>
