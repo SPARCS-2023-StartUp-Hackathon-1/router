@@ -59,3 +59,44 @@ b {
   font-size: 32px;
   font-weight: 700;
 }
+.font-title-large-regular {
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.toggleSwitch {
+  width: 50px;
+  height: 25px;
+  display: block;
+  position: relative;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 3px 3px rgba(0 0 0 / 5%);
+  cursor: pointer;
+  /* margin: 30px; */
+}
+
+.toggleSwitch .toggleButton {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: var(--red);
+}
+
+#toggle:checked ~ .toggleSwitch {
+  background: var(--red);
+}
+
+#toggle:checked ~ .toggleSwitch .toggleButton {
+  left: calc(100% - 23px);
+  background: #fff;
+}
+
+.toggleSwitch,
+.toggleButton {
+  transition: all 0.2s ease-in;
+}

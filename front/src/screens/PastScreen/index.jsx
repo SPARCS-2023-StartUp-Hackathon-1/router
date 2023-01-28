@@ -31,7 +31,7 @@ const PastScreen = () => {
           paddingTop: 32,
           width: "calc(100% - 48px)",
           background: "rgba(255, 255, 255, 0.75)",
-          webkitBackdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
           BackdropFilter: "blur(20px)",
         }}
       >

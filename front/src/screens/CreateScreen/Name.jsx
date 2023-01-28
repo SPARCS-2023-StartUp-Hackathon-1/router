@@ -2,6 +2,14 @@ import React from "react";
 import FlagImg from "static/assets/Flag.png";
 
 const Name = ({ info, setInfo }) => {
+  const styleInnerGrid = {
+    position: "absolute",
+    columnGap: 12,
+    display: "flex",
+    top: 580,
+    left: "calc(50% - 113px)",
+  };
+
   return (
     <div
       style={{
@@ -35,6 +43,19 @@ const Name = ({ info, setInfo }) => {
         placeholder="Ex. 신나는 대전 여행"
         onChange={(e) => setInfo({ ...info, name: e.target.value })}
       />
+      <div style={styleInnerGrid}>
+        <div
+          className="font-text-large"
+          style={{ margin: "2px", color: "var(--red)" }}
+        >
+          지금 진행 중인 여행이에요
+        </div>
+        <input type="checkbox" id="toggle" hidden />
+
+        <label for="toggle" class="toggleSwitch">
+          <span class="toggleButton"></span>
+        </label>
+      </div>
     </div>
   );
 };
