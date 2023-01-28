@@ -67,7 +67,7 @@ const createHandler = async (req, res) => {
         pins.push(pin._id);
       }
 
-      const user = await userModel.findOne({ _id: userId }).populate("trips");
+      const user = await userModel.findOne({ id: userId }).populate("trips");
       let trip = new tripModel({
         name: name,
         startTime: startTime.toString(),
