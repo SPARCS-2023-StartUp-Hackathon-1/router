@@ -2,9 +2,8 @@ const { userModel } = require("../modules/mongo");
 
 const triplistHandler = async (req, res) => {
   try {
-    console.log(req.body.userId);
     const user = await userModel
-      .findOne({ id: req.body.userId })
+      .findOne({ id: req.params.userId })
       .populate("trips");
     res.send(user.trips);
   } catch (err) {

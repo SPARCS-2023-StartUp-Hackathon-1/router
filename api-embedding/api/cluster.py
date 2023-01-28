@@ -4,6 +4,7 @@ import requests
 from PIL import Image
 from math import radians, cos, sin, asin, sqrt
 from pillow_heif import register_heif_opener
+from googlemap import aroundSearch
 
 register_heif_opener()
 
@@ -160,7 +161,7 @@ def clusters2res(clusters):
         latitude, longitude = latlongMedian([image for x in cluster for image in x["images"]])
         res.append({
             "name": "", # FIXME
-            "location": "", # FIXME
+            "location": aroundSearch(latitude, longitude),
             "latitude": latitude,
             "longitude": longitude,
             "startTime": cluster[0]["images"][0]["time"],

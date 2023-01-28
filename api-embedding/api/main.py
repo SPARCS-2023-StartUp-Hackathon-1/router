@@ -51,13 +51,10 @@ def clusteringHandler(body: ClusteringBody):
         
         # clustering Large
         clusters = clusteringLarge(images)
-        # print(len(images))
-        # print(len(clusters))
 
         # clustering Deep
         clustersV2 = [clusteringDeep(cluster) for cluster in clusters]
         
-        # print(clusters2res(clustersV2))
         return {
             "clusters": clusters2res(clustersV2),
             "startTime" : startTime,
