@@ -41,7 +41,7 @@ module.exports.getUploadPUrlPost = (filePath, contentType, cb) => {
       Conditions: [
         { key: filePath },
         ["eq", "$Content-Type", contentType],
-        ["content-length-range", 1, 2 * 1024 * 1024], // Maximum file size is 2MB
+        ["content-length-range", 1, 20 * 1024 * 1024], // Maximum file size is 20MB
       ],
     },
     (err, data) => {
