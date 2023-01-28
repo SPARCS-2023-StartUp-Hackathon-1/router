@@ -5,6 +5,8 @@ import axios from "utils/axios";
 import axiosOri from "axios";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import CameraImg from "static/assets/Camera.png";
+import loginInfoAtom from "recoil/logininfo/atom";
+import { useRecoilValue } from "recoil";
 
 const UB = ({ children }) => (
   <u>
@@ -17,6 +19,7 @@ const Photo = ({ info, setInfo }) => {
   const [profileAlert, setProfileAlert] = useState(null);
   const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const loginInfo = useRecoilValue(loginInfoAtom);
   useEffect(() => {
     setDisabled(!info.photos?.length);
     setMessage(
@@ -107,6 +110,7 @@ const Photo = ({ info, setInfo }) => {
       name: info.name,
       progress: false,
       imageIds: info.photos,
+      userId: loginInfo.id,
     });
   };
   return (
