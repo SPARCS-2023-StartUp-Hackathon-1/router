@@ -5,12 +5,13 @@ const {
   tripModel,
   imageModel,
   pinModel,
+  pinElementModel,
 } = require("../modules/mongo");
 
 // const l = require("./test");
 
 const createHandler = async (req, res) => {
-  const { name, progress, imageIds } = req.body;
+  const { name, progress, imageIds, userId } = req.body;
   try {
     // db에서 이미지 정보 찾기
     const imageObjects = [];
@@ -27,57 +28,54 @@ const createHandler = async (req, res) => {
     }
 
     try {
-      // fastapi에 api 콜해서 클러스터링 결과 받아오기
+      //에 api 콜해서 클러스터링 결과 받아오기
       const clusterRes = await axios.post(
         `${loadenv.embeddingUrl}/clustering`,
         {
           images: imageObjects,
         }
       );
-      // console.log(clusterRes.data);
-      // return;
-      // 일단 연속 사진이 없는 경우
-      const { cluster, startTime, endTime } = clusterRes;
+
+      const { clusters, startTime, endTime } = clusterRes.data;
       const pins = [];
-      for (const subcluster of cluster) {
+      for (const cluster of clusters) {
         const subpin = [];
-        for (const pinelem of subcluster) {
-          let pinElement = new pinElement({
-            mainImage: pinelem[0].mainImage,
-            vector: pinelem[0].vector,
-            images: pinelem[0].images,
+        for (const pinelem of cluster["imageSets"]) {
+          let pinElement = new pinElementModel({
+            mainImage: pinelem["mainImage"],
+            vector: pinelem["vector"].toString(),
+            images: pinelem["images"],
           });
+          console.log(pinelem["mainImage"]);
           await pinElement.save();
           subpin.push(pinElement._id);
         }
+
         let pin = new pinModel({
-          name: "",
+          name: cluster["name"],
           note: "",
-          startTime: subpin[0].images[0].time.toString(),
-          endTime: subpin[subpin.length - 1].images[0].time.toString(),
-          mainImage: subpin[0].images[0],
+          startTime: cluster["startTime"],
+          endTime: cluster["endTime"],
+          mainImage: cluster["mainImage"],
           imageSets: subpin,
         });
         await pin.save();
         pins.push(pin._id);
-
-        const user = await userModel
-          .findOne({ id: req.userId })
-          .populate("trips");
-
-        let trip = new tripModel({
-          name: name,
-          startTime: startTime.toString(),
-          endTime: endTime.toString(),
-          progress: progress,
-          pins: pins,
-        });
-        await trip.save();
-
-        user.trips.push(trip._id);
-        await user.save();
-        return res.send(trip._id); // trip._id send
       }
+
+      const user = await userModel.findOne({ _id: userId }).populate("trips");
+      let trip = new tripModel({
+        name: name,
+        startTime: startTime.toString(),
+        endTime: endTime.toString(),
+        progress: progress,
+        pins: pins,
+      });
+      await trip.save();
+      user.trips.push(trip._id);
+      await user.save();
+
+      res.send(trip._id); // trip._id send
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +88,20 @@ const createHandler = async (req, res) => {
   }
 };
 
-createHandler({ body: { imageIds: [] } });
+// createHandler(
+//   {
+//     body: {
+//       name: "hi",
+//       progress: true,
+//       userId: "63d50982b9091985974c36eb",
+//       imageIds: ["63d542b89badf76614652a29"],
+//     },
+//   },
+//   {
+//     json: console.log,
+//     send: console.log,
+//   }
+// );
 
 const pinlistHandler = async (req, res) => {
   try {
