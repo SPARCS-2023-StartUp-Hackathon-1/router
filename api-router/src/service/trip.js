@@ -2,7 +2,7 @@ const { userModel, tripModel } = require("../modules/mongo");
 const pincreateHandler = require("../service/pin");
 
 const createHandler = async (req, res) => {
-  const { name, startTime, endTime, progress, pins } = req.body;
+  const { name, progress, imageIds } = req.body;
   try {
     // cluster api 에서 반환하는 return data [pin[pinElements]]
     // 받아온 리스트에 대해 pin/create 호출 그 안에서 [pinElement 생성]
@@ -12,8 +12,8 @@ const createHandler = async (req, res) => {
     const user = await userModel.findOne({ id: req.userId }).populate("trips");
     let trip = new tripModel({
       name: name,
-      startTime: startTime,
-      endTime: endTime,
+      // startTime: startTime,
+      // endTime: endTime,
       progress: progress,
       pins: [], //  pins에는 clustering 한 결과 넣어줘야함, front의 pins 에는 그냥 사진들을 쭉 받아오는걸로?
     });
