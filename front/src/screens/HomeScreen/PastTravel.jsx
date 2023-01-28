@@ -5,6 +5,7 @@ import PhotoBox from "components/common/PhotoBox";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import loginInfoAtom from "recoil/logininfo/atom";
 import { useRecoilValue } from "recoil";
+import GrayBox from "components/common/GrayBox";
 
 const PastTravel = () => {
   const [trips, setTrips] = useState([]);
@@ -52,7 +53,9 @@ const PastTravel = () => {
               />
             ))
         ) : (
-          <div style={{ textAlign: "center" }}>여행 기록이 없어요</div>
+          <GrayBox padding="24px 0">
+            <div style={{ textAlign: "center" }}>여행 기록이 없어요</div>
+          </GrayBox>
         )}
       </div>
     </>
