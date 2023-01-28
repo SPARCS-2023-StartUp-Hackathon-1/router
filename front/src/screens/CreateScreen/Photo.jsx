@@ -20,6 +20,7 @@ const Photo = ({ info, setInfo }) => {
   const [profileAlert, setProfileAlert] = useState(null);
   const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const navigate = useNavigate();
   const loginInfo = useRecoilValue(loginInfoAtom);
   useEffect(() => {
     setDisabled(!info.photos?.length);
@@ -127,7 +128,10 @@ const Photo = ({ info, setInfo }) => {
       imageIds: info.photos,
       userId: loginInfo.id,
     });
-    console.log(response);
+    if (response.status === 200) {
+      console.log(response);
+      navigate("/travel/" + response.data);
+    }
   };
   return (
     <>

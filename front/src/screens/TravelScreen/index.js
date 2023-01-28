@@ -8,6 +8,7 @@ import {
   Polyline,
 } from "@react-google-maps/api";
 import GrayBox from "components/common/GrayBox";
+import { getS3Url } from "tools/image";
 import "./google_map.css";
 
 const containerStyle = {
@@ -125,7 +126,21 @@ const TravelScreen = () => {
                     padding: 4,
                     cursor: "pointer",
                   }}
-                />
+                >
+                  <img
+                    src={getS3Url(`/image-view/${pin.mainImage}`)}
+                    style={{
+                      position: "absolute",
+                      top: "0px",
+                      left: "0px",
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                    }}
+                    alt={`/${pin._id}`}
+                  />
+                </div>
               </InfoWindow>
             ))}
           {path?.length && <Polyline path={path} options={options} />}
