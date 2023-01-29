@@ -1,4 +1,4 @@
-# ROUTER - embedding api
+# ROUTER - main api
 
 ## How to serve
 
