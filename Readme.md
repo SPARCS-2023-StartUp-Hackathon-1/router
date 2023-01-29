@@ -1,6 +1,6 @@
-# [TEAM B] Repository ROUTER
+# [TEAM B] ROUTER
 
-이 Repository는 **SPARCS 2023 StartUp Hackathon** 제출용으로, "ROUTER" 프로젝트의 웹 프론트, 백엔드를 담당하는 Monorepo입니다. 이 레포에는 다음과 같은 기능이 포함되어 있습니다.
+이 Repository는 **SPARCS 2023 StartUp Hackathon** 제출용으로, 프로젝트 "ROUTER"의 웹 프론트, 백엔드를 담당하는 Monorepo입니다. 이 레포에는 다음과 같은 기능이 포함되어 있습니다.
 
 - 여행 사진 업로드
 - 시간 및 장소 기반 사진 클러스터링
