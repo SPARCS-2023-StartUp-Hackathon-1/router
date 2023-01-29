@@ -32,7 +32,7 @@ const Header = () => {
     >
       {path.startsWith("/create") || path.startsWith("/travel") ? (
         <ArrowBackIosNewRoundedIcon
-          onClick={() => navigate(-1)}
+          onClick={() => navigate(path.startsWith("/travel") ? "/home" : -1)}
           style={{ cursor: "pointer" }}
         />
       ) : (
