@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FlagImg from "static/assets/Flag.png";
-import { Switch } from "@material-ui/core";
+// import { Switch } from "@material-ui/core";
 
 const Name = ({ info, setInfo }) => {
   const [checked, setChecked] = useState(false);
@@ -57,7 +57,7 @@ const Name = ({ info, setInfo }) => {
           style={{ margin: "2px", color: "var(--red)" }}
         >
           지금 진행 중인 여행이에요
-          <Switch checked={checked} onChange={switchHandler} />
+          {/* <Switch checked={checked} onChange={switchHandler} /> */}
         </div>
       </div>
     </div>

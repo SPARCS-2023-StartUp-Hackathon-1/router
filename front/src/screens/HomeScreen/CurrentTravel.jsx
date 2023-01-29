@@ -28,9 +28,9 @@ const CurrentTravel = () => {
   return (
     <PhotoBox
       height={228}
-      key={onetrip._id}
-      path={onetrip.mainImage}
-      href={`/travel/${onetrip._id}`}
+      key={onetrip?._id}
+      path={onetrip?.mainImage}
+      href={`/travel/${onetrip?._id}`}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
         <ProfileImg width={32} />
