@@ -8,9 +8,12 @@ COPY . .
 RUN apk update && apk add curl
 
 # Install requirements
-RUN npm ci
+RUN npm install --lagacy-peer-deps
 
 # Run container
 EXPOSE 80
 ENV PORT 80
+ENV MONGO_PATH mongodb://localhost:27017/local
+ENV API_EMBEDDING_URL http://router.hackathon.sparcs.org:8080
+ENV SESSION_KEY SESSION_KEY
 CMD ["npm", "run", "serve"]
