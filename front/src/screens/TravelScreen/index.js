@@ -45,6 +45,8 @@ import "./google_map.css";
 // };
 
 const ImageLists = ({ images = [] }) => {
+  console.log(images);
+  console.log(images.type);
   return (
     <div
       style={{
@@ -53,22 +55,32 @@ const ImageLists = ({ images = [] }) => {
         alignContent: "space-between",
       }}
     >
-      {images.map((item, index) => {
+      {images.map((items, index) => {
+        console.log(items);
         return (
           <div
             style={{
               width: "64px",
-              height: "64px",
+              height: "fit-content",
               background: "#F3F3F3",
               borderRadius: "8px",
               overflow: "hidden",
               flexWrap: "wrap",
             }}
           >
-            <img
-              style={{ width: "100%", height: "100%" }}
-              src={`${s3Url}/image-view/${item}`}
-            />
+            {items.length > 1 ? (
+              items.map((item, index) => (
+                <img
+                  style={{ width: "64px", height: "64px" }}
+                  src={`${s3Url}/image-view/${item}`}
+                />
+              ))
+            ) : (
+              <img
+                style={{ width: "64px", height: "64px" }}
+                src={`${s3Url}/image-view/${items}`}
+              />
+            )}
           </div>
         );
       })}
