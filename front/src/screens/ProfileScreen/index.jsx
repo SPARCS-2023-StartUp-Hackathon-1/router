@@ -8,7 +8,7 @@ const ProfileScreen = () => {
   return (
     <div style={{ marginTop: 110 }}>
       <div className="font-title-large-regular" style={{ marginBottom: 24 }}>
-        <b>{loginInfo.id ?? "사용자"}</b> 님
+        <b>{loginInfo?.id ?? "사용자"}</b> 님
       </div>
       <ProfileMenu />
       <div style={{ marginTop: 36 }}>📄 이용 약관 읽어보기</div>
