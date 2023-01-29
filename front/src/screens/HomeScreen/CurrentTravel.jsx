@@ -8,39 +8,58 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 const CurrentTravel = () => {
-  const [onetrip, setTrip] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [length, setLength] = useState(0);
   const loginInfo = useRecoilValue(loginInfoAtom);
   useEffect(() => {
     const f = async () => {
       const response = await axios.get(`/user/triplist/${loginInfo.id}`);
+
       if (response.status === 200) {
         const currTrip = [];
+        setLength(response.data.length);
         for (const trip of response.data) {
           if (trip.progress == true) {
             currTrip.push(trip);
           }
         }
-        setTrip(currTrip[0]);
+        setTrips(currTrip);
       }
     };
     if (loginInfo?.id) f();
   }, [loginInfo]);
   return (
-    <PhotoBox
-      height={228}
-      key={onetrip?._id}
-      path={onetrip?.mainImage}
-      href={`/travel/${onetrip?._id}`}
-    >
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <ProfileImg width={32} />
-        <ProfileImg width={32} margin="0 0 0 -8px" />
-        <ProfileImg width={32} margin="0 0 0 -8px" />
-        <div className="font-text-small" style={{ marginLeft: 12 }}>
-          지금까지 <u>8</u>개의 핀이 기록되었어요
-        </div>
-      </div>
-    </PhotoBox>
+    <>
+      {trips.slice(0, 1).map((trip) => {
+        const date = trip.startTime.split("T")[0].split("-");
+        return (
+          <PhotoBox
+            height={228}
+            key={trip._id}
+            path={trip.mainImage}
+            href={`/travel/${trip._id}`}
+          >
+            <div className="font-text-large">
+              {date[0].slice(2, 4)}년 {date[1]}월
+            </div>
+            <div
+              className="font-subtitle-large"
+              style={{ margin: "4px 0 8px" }}
+            >
+              {trip.name}
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <ProfileImg width={32} />
+              <ProfileImg width={32} margin="0 0 0 -8px" />
+              <ProfileImg width={32} margin="0 0 0 -8px" />
+              <div className="font-text-small" style={{ marginLeft: 12 }}>
+                지금까지 <u>{length}</u>개의 핀이 기록되었어요
+              </div>
+            </div>
+          </PhotoBox>
+        );
+      })}
+    </>
   );
 };
 
