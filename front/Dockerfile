@@ -17,4 +17,6 @@ RUN npm run build
 
 # serve
 EXPOSE 80
+ENV REACT_APP_API_ROUTER_URL http://router.hackathon.sparcs.org:8000
+ENV REACT_APP_S3_URL https://sparcs-2023-startup-hackathon-b-1.s3.ap-northeast-2.amazonaws.com
 CMD ["sh", "-c", "npx react-inject-env set && serve -s build -l 80"]
