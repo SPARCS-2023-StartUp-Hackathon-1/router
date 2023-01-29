@@ -17,9 +17,9 @@ button[title|="닫기"] {
 }
 
 .gm-style .gm-style-iw-tc {
-  display: none;
+  display: none !important;
 }
 
 .gm-control-active {
-  display: none;
+  display: none !important;
 }

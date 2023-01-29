@@ -20,6 +20,9 @@ const Photo = ({ info, setInfo }) => {
   const [profileAlert, setProfileAlert] = useState(null);
   const [message, setMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const [done, setDone] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [width, setWidth] = useState("1%");
   const navigate = useNavigate();
   const loginInfo = useRecoilValue(loginInfoAtom);
   useEffect(() => {
@@ -31,9 +34,15 @@ const Photo = ({ info, setInfo }) => {
       </>
     );
   }, [info.photos?.length, info.total]);
+  useEffect(
+    () => setWidth(`calc((100% - 48px) * ${done / total})`),
+    [done, total]
+  );
   const handleUploadProfileImage = async () => {
     setProfileAlert("LOADING");
     const images = inputImage.current?.files;
+
+    setTotal(images.length);
     const imageUploadSuccessList = [];
     const imageUploadFailList = [];
     for (const image of images) {
@@ -71,11 +80,11 @@ const Photo = ({ info, setInfo }) => {
           if (!res2?.data?.result) throw new Error("Upload image fail");
           // 사진 하나 업로드 성공
           imageUploadSuccessList.push(data.id);
-          console.log("success");
+          setDone((done) => done + 1);
         } catch (e) {
           // 사진 하나 업로드 실패
           imageUploadFailList.push(data.id);
-          console.log("fail");
+          setDone((done) => done + 1);
         }
       } catch (e) {
         console.error(e);
@@ -86,6 +95,7 @@ const Photo = ({ info, setInfo }) => {
       total: images.length + (info.total ?? 0),
       photos: (info.photos ?? []).concat(imageUploadSuccessList),
     });
+    setDone(0);
     if (!imageUploadSuccessList.length) setProfileAlert("FAIL");
     else setProfileAlert("SUCCESS");
     console.log(imageUploadSuccessList, imageUploadFailList);
@@ -184,6 +194,29 @@ const Photo = ({ info, setInfo }) => {
           </>
         )}
       </div>
+
+      {profileAlert === "LOADING" && (
+        <>
+          <div
+            className="font-small-large"
+            style={{
+              textAlign: "right",
+              margin: "0 12px",
+              color: "var(--red)",
+            }}
+          >
+            {done} / {total}
+          </div>
+          <div
+            style={{
+              height: 2,
+              width: width,
+              backgroundColor: "var(--red)",
+              margin: "12px 8px",
+            }}
+          />
+        </>
+      )}
       <div
         style={{
           display: "flex",
