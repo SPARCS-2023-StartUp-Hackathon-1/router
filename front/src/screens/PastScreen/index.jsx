@@ -11,7 +11,16 @@ const PastScreen = () => {
   useEffect(() => {
     const f = async () => {
       const response = await axios.get(`/user/triplist/${loginInfo.id}`);
-      if (response.status === 200) setTrips(response.data);
+      if (response.status === 200) {
+        const pastTrips = [];
+        for (const trip of response.data) {
+          if (trip.progress == false) {
+            pastTrips.push(trip);
+          }
+        }
+        console.log(pastTrips.length);
+        setTrips(pastTrips);
+      }
     };
     if (loginInfo?.id) f();
   }, [loginInfo]);
