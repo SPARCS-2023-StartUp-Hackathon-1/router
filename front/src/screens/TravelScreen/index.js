@@ -360,10 +360,21 @@ const TravelScreen = () => {
                     </div>
                     <div style={{ height: "8px" }} />
                     <div style={{ lineHeight: "14px", height: "14px" }}>
-                      {`${pinInfo?.pin?.startTime} - ${pinInfo?.pin?.endTime}`}
+                      {`${pinInfo?.pin?.startTime.split("T")[0]} - ${
+                        pinInfo?.pin?.endTime.split("T")[0]
+                      }`}
                     </div>
                     <div style={{ height: "8px" }} />
-                    <div style={{ lineHeight: "14px", height: "14px" }}>
+                    <div
+                      style={{
+                        lineHeight: "14px",
+                        height: "14px",
+                        width: "100%",
+                        overflow: "hidden",
+                        whiteSpace: "pre",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {pinInfo?.pin?.location}
                     </div>
                   </div>
