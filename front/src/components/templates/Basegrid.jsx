@@ -17,7 +17,7 @@ const BaseGrid = ({ children }) => {
         const loginInfoRes = await axios.get("/auth/logininfo");
         if (
           loginInfoRes.status !== 200 ||
-          !!loginInfoRes ||
+          !loginInfoRes ||
           !loginInfoRes.data?.id
         )
           window.location.href = "/login";

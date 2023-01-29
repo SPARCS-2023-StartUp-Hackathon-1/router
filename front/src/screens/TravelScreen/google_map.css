@@ -19,3 +19,7 @@ button[title|="닫기"] {
 .gm-style .gm-style-iw-tc {
   display: none;
 }
+
+.gm-control-active {
+  display: none;
+}
