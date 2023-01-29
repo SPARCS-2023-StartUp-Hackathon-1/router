@@ -14,6 +14,6 @@ RUN npm install --lagacy-peer-deps
 EXPOSE 80
 ENV PORT 80
 ENV MONGO_PATH mongodb://localhost:27017/local
-ENV API_EMBEDDING_URL http://router.hackathon.sparcs.org:8080
+ENV API_EMBEDDING_URL http://router.hackathon.sparcs.org:9000
 ENV SESSION_KEY SESSION_KEY
 CMD ["npm", "run", "serve"]
