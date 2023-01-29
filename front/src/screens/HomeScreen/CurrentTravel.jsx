@@ -9,20 +9,20 @@ import { useRecoilValue } from "recoil";
 
 const CurrentTravel = () => {
   const [trips, setTrips] = useState([]);
+  const [length, setLength] = useState(0);
   const loginInfo = useRecoilValue(loginInfoAtom);
-  const [date, setDate] = useState("");
   useEffect(() => {
     const f = async () => {
       const response = await axios.get(`/user/triplist/${loginInfo.id}`);
+
       if (response.status === 200) {
         const currTrip = [];
+        setLength(response.data.length);
         for (const trip of response.data) {
           if (trip.progress == true) {
             currTrip.push(trip);
           }
         }
-        console.log(currTrip[0].name);
-        console.log(currTrip[0].startTime);
         setTrips(currTrip);
       }
     };
@@ -53,7 +53,7 @@ const CurrentTravel = () => {
               <ProfileImg width={32} margin="0 0 0 -8px" />
               <ProfileImg width={32} margin="0 0 0 -8px" />
               <div className="font-text-small" style={{ marginLeft: 12 }}>
-                지금까지 <u>8</u>개의 핀이 기록되었어요
+                지금까지 <u>{length}</u>개의 핀이 기록되었어요
               </div>
             </div>
           </PhotoBox>
